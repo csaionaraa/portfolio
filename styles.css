@@ -17,34 +17,11 @@
   --nav-link: rgba(255, 255, 255, 0.75);
   --nav-panel: rgba(10, 10, 10, 0.85);
   --placeholder: #d9d9d9;
-  --teaser-a: #3d3d3d;
-  --teaser-b: #2b1119;
 
   --font-body: "Sora", system-ui, -apple-system, sans-serif;
   --font-display: "Karla", "Sora", system-ui, sans-serif;
   --font-pixel: "Press Start 2P", "Sora", system-ui, sans-serif;
   --font-script: "Great Vibes", cursive;
-}
-
-/* Tema claro */
-:root[data-theme="light"] {
-  --bg: #f2f2f2;
-  --text: #121212;
-  --text-muted: #5c5c5c;
-  --glass-bg: rgba(0, 0, 0, 0.04);
-  --surface: #ffffff;
-  --border: rgba(0, 0, 0, 0.15);
-  --nav-link: rgba(18, 18, 18, 0.7);
-  --nav-panel: rgba(242, 242, 242, 0.9);
-  --placeholder: #d9d9d9;
-  --teaser-a: #d8d8d8;
-  --teaser-b: #f7cede;
-}
-
-/* No tema claro a sombra escura suja o texto: some com ela */
-:root[data-theme="light"] .hero-text,
-:root[data-theme="light"] .teaser-title {
-  text-shadow: none;
 }
 
 html {
@@ -148,20 +125,34 @@ main {
 .navbar {
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
   z-index: 1000;
   background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+  border-radius: 0;
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              top 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              border-radius 0.45s ease,
+              background 0.35s ease,
+              backdrop-filter 0.35s ease;
 }
 
-/* Ao rolar a página: vira glass (blur + transparente) */
+/* Ao rolar: encolhe numa pílula flutuante de vidro, sem encostar nas bordas */
 .navbar.scrolled {
+  top: 14px;
+  width: min(92%, 880px);
+  border-radius: 999px;
   background: var(--glass-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* barra mais baixa quando encolhida */
+.navbar.scrolled .nav-container {
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
 }
 
 .nav-container {
@@ -171,6 +162,7 @@ main {
   display: flex;
   align-items: center;
   gap: 2.5rem;
+  transition: padding 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .logo {
@@ -188,7 +180,8 @@ main {
 .nav-links {
   flex: 1;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 3rem;
   list-style: none;
 }
 
@@ -220,40 +213,6 @@ main {
 .nav-links a:hover::after {
   width: 100%;
 }
-
-/* ===== Botão de tema (claro/escuro) ===== */
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  flex: none;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  background: var(--glass-bg);
-  color: var(--text);
-  cursor: pointer;
-  transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease;
-}
-
-.theme-toggle:hover {
-  transform: translateY(-2px) rotate(15deg);
-  border-color: #ff006e;
-  color: #ff006e;
-}
-
-.theme-toggle svg {
-  width: 18px;
-  height: 18px;
-}
-
-/* mostra só o ícone do tema para o qual a pessoa vai trocar */
-.theme-toggle .icon-sun { display: none; }
-.theme-toggle .icon-moon { display: block; }
-
-:root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
-:root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
 
 /* ===== Botão hambúrguer (mobile) ===== */
 .menu-toggle {
@@ -486,97 +445,30 @@ main {
   transform: scale(1.06);
 }
 
-/* ===== Faixa "View my projects" ===== */
-.teaser {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 175px;
-  overflow: hidden;
-  text-decoration: none;
-}
-
-.teaser-strip {
-  position: absolute;
-  /* estoura as bordas para o blur não deixar as pontas transparentes */
-  top: -20px;
-  bottom: -20px;
-  left: 0;
-  display: flex;
-  width: max-content;
-  filter: blur(7px);
-  transition: filter 0.35s ease;
-  animation: desfilar 30s linear infinite;
-  /* isola a faixa em sua própria camada: o blur animado não força
-     o navegador a repintar a página inteira a cada rolagem */
-  will-change: transform;
-  contain: paint;
-}
-
-/* Desliza metade da faixa (a cópia assume o lugar do original) */
-@keyframes desfilar {
-  to { transform: translateX(-50%); }
-}
-
-.teaser-item {
-  flex: none;
-  /* cada cópia precisa ser mais larga que a tela, senão sobra vão no loop */
-  width: 18vw;
-  min-width: 170px;
-  /* margin em vez de gap: mantém o loop exato em 50% */
-  margin-right: 4px;
-  background: var(--teaser-a);
-  background-size: cover;
-  background-position: center;
-}
-
-.teaser-item:nth-child(even) {
-  background-color: var(--teaser-b);
-}
-
-.teaser-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.teaser-title {
-  position: absolute;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), color 0.35s ease;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(1.6rem, 4vw, 2.6rem);
-  letter-spacing: -0.1em;
-  text-transform: uppercase;
-  color: var(--text);
-  white-space: nowrap;
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.7);
-}
-
-.teaser:hover .teaser-strip {
-  filter: blur(3px);
-}
-
-.teaser:hover .teaser-title {
-  transform: translate(-50%, -50%) scale(1.06);
-  color: #ff006e;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .teaser-strip {
-    animation: none;
-  }
-}
-
 /* ===== Projetos (pastas de gaveta) ===== */
 .projects {
+  position: relative;
   max-width: 1100px;
   margin: 0 auto;
   padding: 6rem 1.5rem;
+}
+
+.stack,
+.projects-title {
+  position: relative;
+  z-index: 1;
+}
+
+/* símbolos que aparecem antes da letra certa assentar */
+.scramble-char {
+  color: #ff006e;
+  opacity: 0.7;
+}
+
+/* largura fixa: sem isso o título "dança" a cada troca de símbolo */
+.scramble {
+  display: inline-block;
+  min-width: 7ch;
 }
 
 .projects-title {
@@ -604,8 +496,6 @@ main {
   border-radius: 22px;
   overflow: hidden;
   background: var(--surface);
-  /* só a borda separa um card do outro no empilhamento */
-  border: 1px solid var(--border);
 }
 
 /* Empilhamento escalonado: cada card para um pouco mais abaixo */
@@ -842,9 +732,87 @@ main {
 
 
 /* ===== Responsivo ===== */
+/* ===== Responsivo: início (hero) ===== */
+
+/* Telas médias: some a sobreposição e a foto cede espaço ao texto */
+@media (max-width: 1080px) {
+  .hero {
+    padding: 6rem 1.5rem 2rem;
+  }
+
+  .hero-text--left {
+    margin-right: 0;
+  }
+
+  .hero-text--right {
+    margin-left: 0;
+  }
+
+  .img img {
+    width: min(48vw, 480px);
+  }
+}
+
+/* Tablet/celular: as três colunas não cabem mais, então empilha */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    /* altura livre: com tudo empilhado, 100vh cortaria o conteúdo */
+    min-height: auto;
+    gap: 1.25rem;
+    padding: 7rem 1.5rem 3rem;
+  }
+
+  .hero-text--left,
+  .hero-text--right {
+    justify-self: center;
+    text-align: center;
+    margin: 0;
+  }
+
+  /* a foto entra entre os dois blocos de texto */
+  .img {
+    order: 2;
+  }
+
+  .hero-text--right {
+    order: 3;
+  }
+
+  .hero-title,
+  .hero-welcome {
+    font-size: clamp(1.9rem, 7.5vw, 3rem);
+  }
+
+  .img img {
+    width: min(76vw, 400px);
+  }
+
+  .img::before {
+    width: 70%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 6rem 1.25rem 2.5rem;
+    gap: 1rem;
+  }
+
+  .img img {
+    width: 84vw;
+  }
+}
+
 @media (max-width: 720px) {
   .menu-toggle {
     display: flex;
+  }
+
+  .nav-container {
+    padding: 1.25rem 1.5rem;
+    justify-content: flex-end;
   }
 
   .nav-links {
@@ -867,24 +835,6 @@ main {
 
   .nav-links.open {
     transform: translateX(0);
-  }
-
-  /* Hero empilhado no mobile */
-  .hero {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 4rem 1.5rem;
-  }
-
-  .hero-text--left,
-  .hero-text--right {
-    justify-self: center;
-    text-align: center;
-    margin: 0;
-  }
-
-  .img img {
-    width: min(80vw, 420px);
   }
 
   /* About empilhado no mobile */

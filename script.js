@@ -9,28 +9,6 @@ window.addEventListener("scroll", () => {
   }
 });
 
-// ===== Tema claro / escuro =====
-const themeToggle = document.getElementById("theme-toggle");
-const raiz = document.documentElement;
-
-// Preferência salva > preferência do sistema > escuro
-const temaSalvo = localStorage.getItem("tema");
-const sistemaClaro = window.matchMedia("(prefers-color-scheme: light)").matches;
-const temaInicial = temaSalvo || (sistemaClaro ? "light" : "dark");
-
-function aplicarTema(tema) {
-  raiz.setAttribute("data-theme", tema);
-  themeToggle.setAttribute("aria-pressed", tema === "light");
-}
-
-aplicarTema(temaInicial);
-
-themeToggle.addEventListener("click", () => {
-  const novo = raiz.getAttribute("data-theme") === "light" ? "dark" : "light";
-  aplicarTema(novo);
-  localStorage.setItem("tema", novo);
-});
-
 // Menu mobile (abrir/fechar)
 const menuToggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
@@ -117,6 +95,81 @@ if (window.Lenis && !semMovimento) {
   });
 }
 
+// ===== Efeito de "decodificação" no título (PROJECTS) =====
+const SIMBOLOS = "!<>-_\\/[]{}=+*^?#%&$@";
+
+function embaralhar(el, texto) {
+  function sorteia() {
+    return SIMBOLOS[Math.floor(Math.random() * SIMBOLOS.length)];
+  }
+
+  const letras = texto.split("").map((char, i) => ({
+    char,
+    // cada letra assenta num momento diferente: da esquerda para a direita
+    fim: 900 + i * 320 + Math.random() * 300,
+  }));
+
+  const inicio = performance.now();
+  const atual = letras.map(() => sorteia());
+  let ultimoRender = 0;
+
+  function frame(agora) {
+    const t = agora - inicio;
+
+    // redesenha a cada 110ms (e não a cada frame): troca calma, sem piscar
+    if (agora - ultimoRender >= 110) {
+      ultimoRender = agora;
+
+      let html = "";
+      letras.forEach((letra, i) => {
+        if (t >= letra.fim) {
+          html += letra.char;
+        } else {
+          if (Math.random() < 0.6) atual[i] = sorteia();
+          html += `<span class="scramble-char">${atual[i]}</span>`;
+        }
+      });
+
+      el.innerHTML = html;
+    }
+
+    const terminou = t >= letras[letras.length - 1].fim;
+
+    if (!terminou) {
+      requestAnimationFrame(frame);
+    } else {
+      el.innerHTML = texto;
+      el.dataset.rodando = "";
+      // pausa com a palavra inteira legível antes de recomeçar
+      setTimeout(() => rodarSeVisivel(el, texto), 3000);
+    }
+  }
+
+  requestAnimationFrame(frame);
+}
+
+function rodarSeVisivel(el, texto) {
+  if (el.dataset.visivel === "sim" && !el.dataset.rodando) {
+    el.dataset.rodando = "sim";
+    embaralhar(el, texto);
+  }
+}
+
+document.querySelectorAll(".scramble").forEach((el) => {
+  const texto = el.dataset.texto || el.textContent.trim();
+
+  if (semMovimento) return; // sem animação: fica o texto normal
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      el.dataset.visivel = entry.isIntersecting ? "sim" : "nao";
+      if (entry.isIntersecting) rodarSeVisivel(el, texto);
+    });
+  });
+
+  observer.observe(el);
+});
+
 // ===== Bolinha rosa que segue o mouse =====
 const podeUsarCursor =
   window.matchMedia("(hover: hover) and (pointer: fine)").matches && !semMovimento;
@@ -151,7 +204,7 @@ if (podeUsarCursor) {
 
   // Cresce sobre elementos interativos
   const alvos = document.querySelectorAll(
-    "a, button, .project-card, .about-photo, .teaser, .footer-social a"
+    "a, button, .project-card, .about-photo, .footer-social a"
   );
 
   alvos.forEach((alvo) => {
