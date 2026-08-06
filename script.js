@@ -1,3 +1,6 @@
+// Preferência do sistema por menos movimento (usada por vários efeitos abaixo)
+const semMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 // Sombra na navbar ao rolar a página
 const navbar = document.getElementById("navbar");
 
@@ -26,22 +29,125 @@ navLinks.querySelectorAll("a").forEach((link) => {
   });
 });
 
-// Revela o conteúdo de cada projeto quando o card entra na tela
+// ===== About: painel que cresce até a tela inteira conforme a rolagem =====
+const aboutTrack = document.querySelector(".about-track");
+const aboutSticky = document.querySelector(".about-sticky");
+const aboutContent = document.querySelector(".about-content");
+
+if (aboutTrack && aboutSticky && aboutContent) {
+  function atualizarAbout() {
+    const area = aboutTrack.getBoundingClientRect();
+    const percurso = area.height - window.innerHeight;
+
+    // 0 quando o trilho encosta no topo, 1 quando termina de passar
+    let p = percurso > 0 ? -area.top / percurso : 0;
+    p = Math.min(Math.max(p, 0), 1);
+
+    // o painel termina de abrir na metade do trilho e fica cheio o resto do tempo
+    const abertura = Math.min(p / 0.5, 1);
+    // o conteúdo entra depois que o painel já cresceu um pouco
+    const conteudo = Math.min(Math.max((abertura - 0.25) / 0.45, 0), 1);
+
+    // no pai: o título e o painel herdam a mesma variável
+    aboutSticky.style.setProperty("--p", abertura.toFixed(3));
+    aboutContent.style.setProperty("--c", conteudo.toFixed(3));
+  }
+
+  if (semMovimento) {
+    // sem animação: painel aberto e conteúdo visível
+    aboutSticky.style.setProperty("--p", "1");
+    aboutContent.style.setProperty("--c", "1");
+  } else {
+    window.addEventListener("scroll", atualizarAbout, { passive: true });
+    window.addEventListener("resize", atualizarAbout);
+    atualizarAbout();
+  }
+}
+
+// ===== Painel lateral dos projetos =====
 const projectCards = document.querySelectorAll(".project-card");
+const painelLista = document.querySelector(".panel-list");
+const painelMeta = document.querySelector(".panel-meta");
 
-const projectObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      entry.target.classList.toggle("is-visible", entry.isIntersecting);
+if (projectCards.length && painelLista && painelMeta) {
+  const painelDesc = painelMeta.querySelector(".project-desc");
+  const painelLink = painelMeta.querySelector(".project-cta");
+
+  // Monta a lista de nomes uma vez, a partir dos data-nome dos cards
+  painelLista.innerHTML = [...projectCards]
+    .map(
+      (card, i) =>
+        `<li data-indice="${i}">${card.dataset.nome || ""}` +
+        ` <span class="panel-seta" aria-hidden="true">&#9666;</span></li>`
+    )
+    .join("");
+
+  const itens = painelLista.querySelectorAll("li");
+  let ativo = -1;
+
+  function mostrarProjeto(indice) {
+    if (indice === ativo) return;
+    ativo = indice;
+
+    itens.forEach((li, i) => li.classList.toggle("is-active", i === indice));
+
+    const card = projectCards[indice];
+
+    // sai, troca o conteúdo, entra: a transição fica no CSS (.trocando)
+    painelMeta.classList.add("trocando");
+
+    setTimeout(() => {
+      painelLink.href = card.dataset.link || "#";
+      escreverPalavras(painelDesc, card.dataset.desc || "");
+      painelMeta.classList.remove("trocando");
+    }, 280);
+  }
+
+  // Cada palavra sobe de dentro de uma "fenda", uma depois da outra
+  function escreverPalavras(el, texto) {
+    if (semMovimento) {
+      el.textContent = texto;
+      return;
+    }
+
+    el.classList.remove("entrando");
+    el.innerHTML = texto
+      .split(" ")
+      .map(
+        (palavra, i) =>
+          `<span class="palavra" style="--i: ${i}"><span>${palavra}</span></span>`
+      )
+      .join("");
+
+    // dois frames: o navegador precisa pintar o estado inicial
+    // antes de a transição valer, senão as palavras já nascem no lugar
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => el.classList.add("entrando"))
+    );
+  }
+
+  // O card ativo é o que cobre o meio da tela (o da frente na pilha)
+  function atualizarAtivo() {
+    const meio = window.innerHeight / 2;
+    let indice = 0;
+
+    projectCards.forEach((card, i) => {
+      const area = card.getBoundingClientRect();
+      if (area.top <= meio && area.bottom >= meio) indice = i;
     });
-  },
-  { threshold: 0.35 }
-);
 
-projectCards.forEach((card) => projectObserver.observe(card));
+    mostrarProjeto(indice);
+  }
 
-// Preferência do sistema por menos movimento
-const semMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.addEventListener("scroll", atualizarAtivo, { passive: true });
+  window.addEventListener("resize", atualizarAtivo);
+
+  // primeiro estado, sem animação de troca
+  ativo = 0;
+  itens[0].classList.add("is-active");
+  painelLink.href = projectCards[0].dataset.link || "#";
+  escreverPalavras(painelDesc, projectCards[0].dataset.desc || "");
+}
 
 // ===== Revelação dos elementos na rolagem =====
 const reveals = document.querySelectorAll("[data-reveal]");
@@ -167,7 +273,18 @@ document.querySelectorAll(".scramble").forEach((el) => {
     });
   });
 
-  observer.observe(el);
+  // mede a largura do texto final e só então libera a animação:
+  // os símbolos são mais estreitos e fariam o bloco tremer a cada troca
+  function iniciar() {
+    el.style.minWidth = `${Math.ceil(el.getBoundingClientRect().width)}px`;
+    observer.observe(el);
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(iniciar);
+  } else {
+    iniciar();
+  }
 });
 
 // ===== Bolinha rosa que segue o mouse =====
