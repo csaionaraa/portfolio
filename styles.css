@@ -195,24 +195,43 @@ main {
   transition: color 0.25s ease;
 }
 
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -4px;
-  width: 0;
-  height: 2px;
-  background: var(--accent);
-  transition: width 0.25s ease;
+.nav-links .nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.nav-links a:hover {
+.nav-links .nav-link .roll {
+  display: block;
+  overflow: hidden;
+  height: 1.25em;
+}
+
+.nav-links .nav-link .roll-inner {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-links .nav-link .roll-inner > span {
+  display: block;
+  height: 1.25em;
+  line-height: 1.25em;
+  white-space: nowrap;
+}
+
+.nav-links .nav-link .roll-inner > span:last-child {
+  color: #ff006e;
+}
+
+.nav-links .nav-link:hover {
   color: var(--text);
 }
 
-.nav-links a:hover::after {
-  width: 100%;
+.nav-links .nav-link:hover .roll-inner {
+  transform: translateY(-1.25em);
 }
+
 
 /* ===== Botão hambúrguer (mobile) ===== */
 .menu-toggle {
