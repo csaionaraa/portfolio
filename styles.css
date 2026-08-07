@@ -135,7 +135,9 @@ main {
               top 0.45s cubic-bezier(0.22, 1, 0.36, 1),
               border-radius 0.45s ease,
               background 0.35s ease,
-              backdrop-filter 0.35s ease;
+              backdrop-filter 0.35s ease,
+              opacity 0.6s ease,
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Ao rolar: encolhe numa pílula flutuante de vidro, sem encostar nas bordas */
@@ -839,6 +841,344 @@ main {
 @media (prefers-reduced-motion: reduce) {
   .project-cta:hover::before { animation: none; }
   .panel-meta.trocando { opacity: 1; transform: none; }
+}
+
+/* ===== Pagina de case (projeto) ===== */
+.case-page {
+  background: #ededed;
+}
+
+/* Navbar sempre escura aqui: o conteudo abaixo e claro */
+.case-page .navbar.scrolled {
+  background: rgba(18, 18, 18, 0.85);
+}
+
+/* Area do video no topo */
+.case-video {
+  position: relative;
+  width: 100%;
+  /* ocupa a tela inteira */
+  height: 100vh;
+  min-height: 520px;
+  background: #262626;
+  overflow: hidden;
+}
+
+.case-video img,
+.case-video video,
+.case-video iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border: 0;
+}
+
+/* Corpo claro do case */
+.case-body {
+  background: #ededed;
+  color: #131313;
+  padding: clamp(2.5rem, 6vw, 5rem) 1.5rem clamp(3rem, 7vw, 6rem);
+}
+
+.case-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.case-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.case-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.1em;
+  color: #131313;
+}
+
+.case-title--sub {
+  margin: clamp(2.5rem, 5vw, 4rem) 0 1.5rem;
+}
+
+/* Mesmo botao da home, adaptado ao fundo claro do case */
+.case-page .btn-outline {
+  margin-top: 0;
+  border-color: rgba(19, 19, 19, 0.45);
+  color: #131313;
+}
+
+.case-page .btn-outline:hover {
+  border-color: #ff006e;
+}
+
+.case-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  max-width: 78ch;
+}
+
+.case-text p {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+  line-height: 1.5;
+  color: #2a2a2a;
+}
+
+/* Paleta de cores */
+.case-colors {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.6rem;
+}
+
+.case-colors li {
+  position: relative;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s);
+  height: clamp(180px, 26vw, 260px);
+  background: var(--cor);
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 1.2rem;
+}
+
+.case-colors span {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+/* fundos claros pedem texto escuro */
+.case-colors li.is-light span {
+  color: #131313;
+}
+
+/* Os quadrados de cor sobem mais que o resto, um depois do outro */
+.case-colors li[data-reveal="up"] {
+  transform: translateY(70px);
+}
+
+.case-colors li[data-reveal].revealed {
+  transform: none;
+}
+
+/* Tipografia do projeto */
+.case-fonts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* os dois blocos centralizados entre si, sem sobra em cima nem embaixo */
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5rem);
+  margin-top: 1rem;
+}
+
+.case-fonts-side {
+  display: flex;
+  flex-direction: column;
+}
+
+.case-fonts-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-top: 1rem;
+  max-width: 46ch;
+}
+
+.case-fonts-text p {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  line-height: 1.55;
+  color: #2a2a2a;
+}
+
+.case-specimens {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  /* largura do proprio texto, encostada na direita:
+     a borda do bloco cai na mesma linha do ultimo quadrado de cor */
+  justify-self: end;
+  width: max-content;
+  max-width: 100%;
+}
+
+.case-specimen h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #131313;
+  margin-bottom: 0.5rem;
+}
+
+.specimen-sora,
+.specimen-poppins {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  line-height: 1.35;
+  color: #4a4a4a;
+}
+
+.specimen-sora {
+  font-family: "Sora", sans-serif;
+}
+
+.specimen-poppins {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Telas do projeto (fotos entram no lugar dos blocos) */
+.case-shots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  background: #ededed;
+}
+
+.case-shots figure {
+  aspect-ratio: 3 / 4;
+  background: #0a0a0a;
+  overflow: hidden;
+}
+
+.case-shots img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Volta para os projetos */
+.case-nav {
+  background: #ededed;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.case-back {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #131313;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(19, 19, 19, 0.4);
+  padding-bottom: 2px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.case-back:hover {
+  color: #ff006e;
+  border-color: #ff006e;
+}
+
+@media (max-width: 720px) {
+  .case-video {
+    height: 80vh;
+    min-height: 380px;
+  }
+
+  .case-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .case-colors li {
+    height: 130px;
+  }
+
+  .case-fonts {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .case-specimens {
+    padding-top: 0;
+  }
+
+  .case-fonts-text {
+    max-width: none;
+  }
+
+  .case-specimens {
+    justify-self: start;
+    width: 100%;
+  }
+
+  .case-shots {
+    grid-template-columns: 1fr;
+  }
+
+  .case-shots figure {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ===== Transicao entre paginas =====
+   Sem cortina: navbar e conteudo entram juntos, em cascata. */
+main,
+.footer {
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --- chegando --- */
+/* letras da navbar: sobem de dentro da mascara, uma depois da outra */
+.nav-link .letra {
+  display: inline-block;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.5s ease;
+  transition-delay: calc(var(--i, 0) * 35ms + 0.15s);
+}
+
+body.pagina-entrando .nav-link .letra {
+  transform: translateY(110%);
+  opacity: 0;
+  transition-delay: 0s;
+}
+
+body.pagina-entrando main,
+body.pagina-entrando .footer {
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+/* o conteudo entra logo depois da navbar */
+main,
+.footer {
+  transition-delay: 0.12s;
+}
+
+/* --- saindo --- */
+body.pagina-saindo .navbar {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+body.pagina-saindo main,
+body.pagina-saindo .footer {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition-delay: 0s;
+}
+
+/* no primeiro frame a transicao nao pode valer, senao nao ha o que animar */
+body.sem-transicao .navbar,
+body.sem-transicao main,
+body.sem-transicao .footer {
+  transition: none;
 }
 
 /* ===== Footer ===== */

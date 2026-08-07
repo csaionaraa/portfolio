@@ -329,3 +329,65 @@ if (podeUsarCursor) {
     alvo.addEventListener("mouseleave", () => blob.classList.remove("is-hover"));
   });
 }
+
+// ===== Transição entre páginas: o conteúdo entra e sai com fade =====
+if (!semMovimento) {
+  const corpo = document.body;
+
+  // Quebra os nomes da navbar em letras, para entrarem em cascata.
+  // A mascara (.roll, com overflow hidden) faz elas surgirem de baixo.
+  let ordem = 0;
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    const copias = link.querySelectorAll(".roll-inner > span");
+
+    copias.forEach((copia) => {
+      const letras = [...copia.textContent];
+      copia.innerHTML = letras
+        // o índice segue a ordem da esquerda para a direita na barra inteira
+        .map((l, i) => `<span class="letra" style="--i: ${ordem + i}">${l}</span>`)
+        .join("");
+    });
+
+    // só a primeira cópia conta: a segunda é a do hover, fica escondida
+    ordem += copias[0] ? copias[0].textContent.length : 0;
+  });
+
+  // Chegada: navbar e conteúdo nascem deslocados e entram em cascata
+  corpo.classList.add("sem-transicao", "pagina-entrando");
+
+  requestAnimationFrame(() => {
+    corpo.classList.remove("sem-transicao");
+    requestAnimationFrame(() => corpo.classList.remove("pagina-entrando"));
+  });
+
+  // Saída: intercepta só os links que trocam de página
+  document.querySelectorAll("a[href]").forEach((link) => {
+    const href = link.getAttribute("href");
+
+    const externo = link.target === "_blank";
+    const naMesmaPagina =
+      !href ||
+      href.startsWith("#") ||
+      href.startsWith("mailto:") ||
+      href.startsWith("tel:");
+
+    if (externo || naMesmaPagina || link.hasAttribute("download")) return;
+
+    link.addEventListener("click", (e) => {
+      // deixa passar ctrl/cmd/shift (abrir em nova aba)
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+
+      e.preventDefault();
+      corpo.classList.add("pagina-saindo");
+
+      setTimeout(() => {
+        window.location.href = link.href;
+      }, 520);
+    });
+  });
+
+  // Voltar pelo navegador: o conteúdo não pode ficar preso invisível
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted) corpo.classList.remove("pagina-saindo", "pagina-entrando");
+  });
+}
