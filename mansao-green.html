@@ -14,7 +14,7 @@
   <header class="navbar" id="navbar">
     <nav class="nav-container">
       <ul class="nav-links" id="nav-links">
-        <li><a class="nav-link" href="index.html#inicio">
+        <li><a class="nav-link" href="index.html#inicio" data-pt="Início">
           <span class="roll">
             <span class="roll-inner">
               <span>Home</span>
@@ -22,7 +22,7 @@
             </span>
           </span>
         </a></li>
-        <li><a class="nav-link" href="index.html#sobre">
+        <li><a class="nav-link" href="index.html#sobre" data-pt="Sobre">
           <span class="roll">
             <span class="roll-inner">
               <span>About</span>
@@ -30,7 +30,7 @@
             </span>
           </span>
         </a></li>
-        <li><a class="nav-link" href="index.html#projetos">
+        <li><a class="nav-link" href="index.html#projetos" data-pt="Projetos">
           <span class="roll">
             <span class="roll-inner">
               <span>Projects</span>
@@ -38,7 +38,7 @@
             </span>
           </span>
         </a></li>
-        <li><a class="nav-link" href="index.html#contato">
+        <li><a class="nav-link" href="index.html#contato" data-pt="Contato">
           <span class="roll">
             <span class="roll-inner">
               <span>Contact</span>
@@ -47,6 +47,12 @@
           </span>
         </a></li>
       </ul>
+
+      <button class="lang-toggle" id="lang-toggle" aria-label="Trocar idioma / Change language">
+        <span data-idioma="en">EN</span>
+        <span aria-hidden="true">/</span>
+        <span data-idioma="pt">PT</span>
+      </button>
 
       <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
         <span></span>
@@ -76,8 +82,8 @@
     <div class="case-body">
       <div class="case-inner">
         <header class="case-head">
-          <h1 class="case-title" data-reveal="up">About the project</h1>
-          <a class="btn-outline btn-roll" data-reveal="up" style="--d: 0.1s" href="https://mansaogreen.com/" target="_blank" rel="noopener">
+          <h1 class="case-title" data-reveal="up" data-pt="Sobre o projeto">About the project</h1>
+          <a class="btn-outline btn-roll" data-reveal="up" data-pt="VER SITE &rarr;" style="--d: 0.1s" href="https://mansaogreen.com/" target="_blank" rel="noopener">
             <span class="roll">
               <span class="roll-inner">
                 <span>VIEW WEBSITE &rarr;</span>
@@ -88,7 +94,7 @@
         </header>
 
         <div class="case-text" data-reveal="up">
-          <p>
+          <p data-pt="A Mansão Green é uma marca de iGaming, e este projeto foi uma reestruturação completa do site, refeito do zero em WordPress. O trabalho focou em repensar estrutura e design, entregando uma interface mais moderna e organizada, alinhada à identidade da marca — e com uma navegação mais clara e intuitiva para o usuário.">
             Mansão Green is an iGaming brand, and this project was a complete
             restructuring of their website, rebuilt from the ground up on
             WordPress. The work focused on reshaping both structure and design,
@@ -96,21 +102,21 @@
             brand identity — while making navigation clearer and more intuitive
             for the user.
           </p>
-          <p>
+          <p data-pt="Tive total liberdade criativa no redesign, com uma única restrição: manter a identidade visual da marca. Peguei o verde original e levei para uma direção mais clara e fluorescente — um tom que preserva o reconhecimento da marca e ao mesmo tempo fala a linguagem visual do mundo do iGaming.">
             I had full creative freedom over the redesign, with one constraint:
             staying true to the brand's visual identity. I took the original green
             and pushed it into a brighter, more fluorescent direction — a tone
             that preserves brand recognition while speaking the visual language of
             the iGaming world.
           </p>
-          <p>
+          <p data-pt="O resultado é um site totalmente responsivo, feito para se adaptar a qualquer dispositivo, com transições suaves e uma navegação que flui desde o primeiro scroll.">
             The result is a fully responsive site, built to adapt across all
             devices, with smooth transitions and a browsing experience that feels
             effortless from the first scroll.
           </p>
         </div>
 
-        <h2 class="case-title case-title--sub" data-reveal="up">Colors</h2>
+        <h2 class="case-title case-title--sub" data-reveal="up" data-pt="Cores">Colors</h2>
 
         <ul class="case-colors">
           <li class="case-color" style="--cor: #131313; --d: 0.00s" data-reveal="up"><span>#131313</span></li>
@@ -122,9 +128,9 @@
 
         <div class="case-fonts">
           <div class="case-fonts-side">
-            <h2 class="case-title case-title--sub" data-reveal="up">Font</h2>
+            <h2 class="case-title case-title--sub" data-reveal="up" data-pt="Fontes">Font</h2>
             <div class="case-fonts-text" data-reveal="up" style="--d: 0.1s">
-              <p>
+              <p data-pt="O projeto usa duas sans-serif geométricas, cada uma com um papel bem definido. A Sora é a fonte principal, presente em todos os títulos e subtítulos do site. Sua construção geométrica e os terminais levemente quadrados dão à interface um ar tecnológico e contemporâneo, que combina com o contexto do iGaming. Foi aplicada com o espaçamento entre letras ajustado, abrindo o espaço entre os caracteres para os títulos respirarem e ganharem um ritmo mais refinado.">
                 The project runs on two geometric sans-serifs, each with a clearly
                 defined role. Sora is the primary typeface, carrying every headline
                 and subheading across the site. Its geometric construction and
@@ -134,7 +140,7 @@
                 between characters so titles breathe and gain a more refined,
                 deliberate rhythm.
               </p>
-              <p>
+              <p data-pt="A Poppins foi escolhida para os campos de formulário, onde o usuário digita. Suas formas arredondadas e a altura de x elevada mantêm o texto legível e confortável em tamanhos pequenos, e seu tom neutro reforça a hierarquia.">
                 Poppins was chosen for the form fields, where the user actually
                 types. Its rounded forms and tall x-height keep input text legible
                 and comfortable at small sizes, and its neutral tone reinforces the
@@ -175,7 +181,7 @@
     </section>
 
     <nav class="case-nav" aria-label="Navegação entre projetos">
-      <a href="index.html#projetos" class="case-back">&larr; Back to projects</a>
+      <a href="index.html#projetos" class="case-back" data-pt="&larr; Voltar aos projetos">&larr; Back to projects</a>
     </nav>
   </main>
 
@@ -183,12 +189,12 @@
     <div class="footer-inner">
       <div class="footer-cols">
         <div class="footer-col">
-          <p class="footer-label">EMAIL:</p>
+          <p class="footer-label" data-pt="E-MAIL:">EMAIL:</p>
           <a href="mailto:csaionaraa@gmail.com">csaionaraa@gmail.com</a>
         </div>
 
         <div class="footer-col">
-          <p class="footer-label">SOCIAL MEDIA:</p>
+          <p class="footer-label" data-pt="REDES SOCIAIS:">SOCIAL MEDIA:</p>
           <div class="footer-social">
             <a href="https://www.linkedin.com/in/carla-saionara-araujo-47b14a226/" target="_blank" rel="noopener" aria-label="LinkedIn">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -205,8 +211,8 @@
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; Copyright 2026. All Rights Reserved by <a href="index.html">Carla Saionara</a></p>
-        <p>Created by <a href="index.html">Carla Saionara</a></p>
+        <p><span data-pt="&copy; Copyright 2026. Todos os direitos reservados por">&copy; Copyright 2026. All Rights Reserved by</span> <a href="index.html">Carla Saionara</a></p>
+        <p><span data-pt="Criado por">Created by</span> <a href="index.html">Carla Saionara</a></p>
       </div>
     </div>
   </footer>

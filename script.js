@@ -45,12 +45,9 @@ if (aboutTrack && aboutSticky && aboutContent) {
 
     // o painel termina de abrir na metade do trilho e fica cheio o resto do tempo
     const abertura = Math.min(p / 0.5, 1);
-    // o conteúdo entra depois que o painel já cresceu um pouco
-    const conteudo = Math.min(Math.max((abertura - 0.25) / 0.45, 0), 1);
 
-    // no pai: o título e o painel herdam a mesma variável
+    // no pai: o título, o painel e o conteúdo herdam a mesma variável
     aboutSticky.style.setProperty("--p", abertura.toFixed(3));
-    aboutContent.style.setProperty("--c", conteudo.toFixed(3));
   }
 
   // No celular o painel e estatico (ver o CSS): a animacao so roda no desktop
@@ -58,9 +55,8 @@ if (aboutTrack && aboutSticky && aboutContent) {
 
   function ligarAbout() {
     if (semMovimento || !telaGrande.matches) {
-      // painel aberto e conteúdo visível, sem depender da rolagem
+      // painel aberto, sem depender da rolagem
       aboutSticky.style.setProperty("--p", "1");
-      aboutContent.style.setProperty("--c", "1");
       return;
     }
     atualizarAbout();
@@ -73,6 +69,9 @@ if (aboutTrack && aboutSticky && aboutContent) {
 }
 
 // ===== Painel lateral dos projetos =====
+// preenchido mais abaixo; o seletor de idioma usa para redesenhar o texto
+let redesenharPainel = null;
+
 const projectCards = document.querySelectorAll(".project-card");
 const painelLista = document.querySelector(".panel-list");
 const painelMeta = document.querySelector(".panel-meta");
@@ -155,6 +154,11 @@ if (projectCards.length && painelLista && painelMeta) {
   itens[0].classList.add("is-active");
   painelLink.href = projectCards[0].dataset.link || "#";
   escreverPalavras(painelDesc, projectCards[0].dataset.desc || "");
+
+  // usado pelo seletor de idioma: reescreve a descrição do projeto atual
+  redesenharPainel = () => {
+    escreverPalavras(painelDesc, projectCards[ativo].dataset.desc || "");
+  };
 }
 
 // ===== Revelação dos elementos na rolagem =====
@@ -212,7 +216,8 @@ if (window.Lenis && !semMovimento) {
 // ===== Efeito de "decodificação" no título (PROJECTS) =====
 const SIMBOLOS = "!<>-_\\/[]{}=+*^?#%&$@";
 
-function embaralhar(el, texto) {
+function embaralhar(el) {
+  const texto = el.dataset.texto;
   function sorteia() {
     return SIMBOLOS[Math.floor(Math.random() * SIMBOLOS.length)];
   }
@@ -255,36 +260,42 @@ function embaralhar(el, texto) {
       el.innerHTML = texto;
       el.dataset.rodando = "";
       // pausa com a palavra inteira legível antes de recomeçar
-      setTimeout(() => rodarSeVisivel(el, texto), 3000);
+      setTimeout(() => rodarSeVisivel(el), 3000);
     }
   }
 
   requestAnimationFrame(frame);
 }
 
-function rodarSeVisivel(el, texto) {
+function rodarSeVisivel(el) {
   if (el.dataset.visivel === "sim" && !el.dataset.rodando) {
     el.dataset.rodando = "sim";
-    embaralhar(el, texto);
+    embaralhar(el);
   }
 }
 
+// Refaz a medida da largura (usada ao trocar de idioma)
+function travarLargura(el) {
+  el.style.minWidth = "";
+  el.style.minWidth = `${Math.ceil(el.getBoundingClientRect().width)}px`;
+}
+
 document.querySelectorAll(".scramble").forEach((el) => {
-  const texto = el.dataset.texto || el.textContent.trim();
+  if (!el.dataset.texto) el.dataset.texto = el.textContent.trim();
 
   if (semMovimento) return; // sem animação: fica o texto normal
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       el.dataset.visivel = entry.isIntersecting ? "sim" : "nao";
-      if (entry.isIntersecting) rodarSeVisivel(el, texto);
+      if (entry.isIntersecting) rodarSeVisivel(el);
     });
   });
 
   // mede a largura do texto final e só então libera a animação:
   // os símbolos são mais estreitos e fariam o bloco tremer a cada troca
   function iniciar() {
-    el.style.minWidth = `${Math.ceil(el.getBoundingClientRect().width)}px`;
+    travarLargura(el);
     observer.observe(el);
   }
 
@@ -338,19 +349,16 @@ if (podeUsarCursor) {
   });
 }
 
-// ===== Transição entre páginas: o conteúdo entra e sai com fade =====
-if (!semMovimento) {
-  const corpo = document.body;
-
-  // Quebra os nomes da navbar em letras, para entrarem em cascata.
-  // A mascara (.roll, com overflow hidden) faz elas surgirem de baixo.
+// Quebra os nomes da navbar em letras, para entrarem em cascata.
+// A mascara (.roll, com overflow hidden) faz elas surgirem de baixo.
+function separarLetrasDaNav() {
   let ordem = 0;
+
   document.querySelectorAll(".nav-link").forEach((link) => {
     const copias = link.querySelectorAll(".roll-inner > span");
 
     copias.forEach((copia) => {
-      const letras = [...copia.textContent];
-      copia.innerHTML = letras
+      copia.innerHTML = [...copia.textContent]
         // o índice segue a ordem da esquerda para a direita na barra inteira
         .map((l, i) => `<span class="letra" style="--i: ${ordem + i}">${l}</span>`)
         .join("");
@@ -359,6 +367,103 @@ if (!semMovimento) {
     // só a primeira cópia conta: a segunda é a do hover, fica escondida
     ordem += copias[0] ? copias[0].textContent.length : 0;
   });
+}
+
+// ===== Idioma: PT / EN =====
+// Cada texto traduzido tem data-pt no HTML; o original (ingles) fica em cache.
+const langToggle = document.getElementById("lang-toggle");
+
+function textoBase(el) {
+  // em botoes com efeito de rolagem o texto aparece duplicado: pega so a 1a copia
+  const copia = el.querySelector(".roll-inner > span");
+  return (copia ? copia.textContent : el.textContent).trim();
+}
+
+function montarRoll(el, texto) {
+  el.innerHTML =
+    '<span class="roll"><span class="roll-inner">' +
+    `<span>${texto}</span><span aria-hidden="true">${texto}</span>` +
+    "</span></span>";
+}
+
+function aplicarIdioma(idioma) {
+  document.documentElement.lang = idioma === "pt" ? "pt-BR" : "en";
+
+  document.querySelectorAll("[data-pt]").forEach((el) => {
+    if (!el.dataset.en) el.dataset.en = textoBase(el);
+    const texto = idioma === "pt" ? el.dataset.pt : el.dataset.en;
+
+    if (el.classList.contains("nav-link") || el.classList.contains("btn-roll")) {
+      montarRoll(el, texto);
+    } else if (el.classList.contains("scramble")) {
+      el.dataset.texto = texto;
+      el.textContent = texto;
+      travarLargura(el);
+    } else {
+      el.textContent = texto;
+    }
+  });
+
+  // descricoes dos projetos ficam em atributos no proprio card
+  document.querySelectorAll(".project-card").forEach((card) => {
+    if (!card.dataset.descEn) card.dataset.descEn = card.dataset.desc || "";
+    card.dataset.desc =
+      idioma === "pt" ? card.dataset.descPt || card.dataset.descEn : card.dataset.descEn;
+  });
+
+  if (redesenharPainel) redesenharPainel();
+
+  // as letras da navbar foram refeitas: separa de novo
+  separarLetrasDaNav();
+
+  if (langToggle) {
+    langToggle.querySelectorAll("span").forEach((s) => {
+      s.classList.toggle("is-on", s.dataset.idioma === idioma);
+    });
+  }
+
+  localStorage.setItem("idioma", idioma);
+}
+
+if (langToggle) {
+  const salvo = localStorage.getItem("idioma");
+  const doNavegador = (navigator.language || "").startsWith("pt") ? "pt" : "en";
+  const inicial = salvo || doNavegador;
+
+  langToggle.addEventListener("click", () => {
+    const atual = document.documentElement.lang === "pt-BR" ? "pt" : "en";
+    const novo = atual === "pt" ? "en" : "pt";
+
+    if (semMovimento) {
+      aplicarIdioma(novo);
+      return;
+    }
+
+    // apaga o conteúdo, troca o texto e traz de volta
+    document.body.classList.add("trocando-idioma");
+
+    setTimeout(() => {
+      aplicarIdioma(novo);
+      document.body.classList.remove("trocando-idioma");
+
+      // as letras da navbar entram de novo em cascata
+      document.body.classList.add("letras-entrando");
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() =>
+          document.body.classList.remove("letras-entrando")
+        )
+      );
+    }, 260);
+  });
+
+  aplicarIdioma(inicial);
+}
+
+// ===== Transição entre páginas: o conteúdo entra e sai com fade =====
+if (!semMovimento) {
+  const corpo = document.body;
+
+  separarLetrasDaNav();
 
   // Chegada: navbar e conteúdo nascem deslocados e entram em cascata
   corpo.classList.add("sem-transicao", "pagina-entrando");

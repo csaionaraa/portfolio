@@ -15,7 +15,7 @@
     <nav class="nav-container">
 
       <ul class="nav-links" id="nav-links">
-        <li><a class="nav-link" href="#inicio">
+        <li><a class="nav-link" href="#inicio" data-pt="Início">
           <span class="roll">
             <span class="roll-inner">
               <span>Home</span>
@@ -23,7 +23,7 @@
             </span>
           </span>
         </a></li>
-        <li><a class="nav-link" href="#sobre">
+        <li><a class="nav-link" href="#sobre" data-pt="Sobre">
           <span class="roll">
             <span class="roll-inner">
               <span>About</span>
@@ -31,7 +31,7 @@
             </span>
           </span>
         </a></li>
-        <li><a class="nav-link" href="#projetos">
+        <li><a class="nav-link" href="#projetos" data-pt="Projetos">
           <span class="roll">
             <span class="roll-inner">
               <span>Projects</span>
@@ -39,7 +39,7 @@
             </span>
           </span>
         </a></li>
-        <li><a class="nav-link" href="#contato">
+        <li><a class="nav-link" href="#contato" data-pt="Contato">
           <span class="roll">
             <span class="roll-inner">
               <span>Contact</span>
@@ -48,6 +48,12 @@
           </span>
         </a></li>
       </ul>
+
+      <button class="lang-toggle" id="lang-toggle" aria-label="Trocar idioma / Change language">
+        <span data-idioma="en">EN</span>
+        <span aria-hidden="true">/</span>
+        <span data-idioma="pt">PT</span>
+      </button>
 
       <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
         <span></span>
@@ -71,9 +77,9 @@
 
       <div class="hero-text hero-text--right">
         <p class="hero-welcome" data-reveal="right" style="--d: 0.24s" aria-label="Welcome to my portfolio">
-          <span aria-hidden="true">WELCOME</span><br />
-          <span aria-hidden="true">TO MY</span><br />
-          <span class="scramble hero-highlight" data-texto="PORTFOLIO" aria-hidden="true">PORTFOLIO</span>
+          <span aria-hidden="true" data-pt="BEM-VINDO">WELCOME</span><br />
+          <span aria-hidden="true" data-pt="AO MEU">TO MY</span><br />
+          <span class="scramble hero-highlight" data-texto="PORTFOLIO" data-pt="PORTFÓLIO" aria-hidden="true">PORTFOLIO</span>
         </p>
       </div>
     </section>
@@ -82,14 +88,14 @@
       <!-- trilho alto: enquanto ele passa, o painel cresce ate a tela toda -->
       <div class="about-track">
         <div class="about-sticky">
-          <p class="about-heading">ABOUT ME</p>
+          <p class="about-heading" data-pt="SOBRE MIM">ABOUT ME</p>
 
           <div class="about-panel">
             <div class="about-content">
               <div class="about-text">
-                <h2 class="about-title">HEY, I&rsquo;M CARLA A UX/UI &amp; WEB DESIGNER</h2>
+                <h2 class="about-title" data-pt="OLÁ, EU SOU A CARLA, DESIGNER UX/UI &amp; WEB">HEY, I&rsquo;M CARLA A UX/UI &amp; WEB DESIGNER</h2>
 
-                <p class="about-desc">
+                <p class="about-desc" data-pt="Especialista em design de interfaces e na criação e desenvolvimento de websites. Sou formada em Desenvolvimento de Sistemas e graduada em Design Gráfico.">
                   Specialized in interface design and in creating and developing
                   websites. I have a technical degree in Systems Development and a
                   bachelor&rsquo;s degree in Graphic Design.
@@ -97,7 +103,7 @@
 
                 <div class="about-contacts">
                   <div>
-                    <p class="about-label">Email:</p>
+                    <p class="about-label" data-pt="E-mail:">Email:</p>
                     <a href="mailto:csaionaraa@gmail.com">csaionaraa@gmail.com</a>
                   </div>
                 </div>
@@ -116,7 +122,7 @@
                 </div>
 
                 <!-- TODO: apontar para o arquivo do curriculo (ex.: curriculo.pdf) -->
-                <a href="#" class="btn-outline btn-roll">
+                <a href="#" class="btn-outline btn-roll" data-pt="BAIXAR CURRÍCULO">
                   <span class="roll">
                     <span class="roll-inner">
                       <span>DOWNLOAD RESUME</span>
@@ -137,7 +143,7 @@
 
     <section id="projetos" class="projects">
       <h2 class="projects-title" data-reveal="up" aria-label="Projects">
-        <span class="scramble" data-texto="PROJECTS" aria-hidden="true">PROJECTS</span>
+        <span class="scramble" data-texto="PROJECTS" data-pt="PROJETOS" aria-hidden="true">PROJECTS</span>
       </h2>
 
       <div class="projects-layout">
@@ -147,6 +153,7 @@
             class="project-card"
             data-nome="MANSÃO GREEN"
             data-desc="Landing page for agency and business ecosystem"
+            data-desc-pt="Landing page para uma agência e ecossistema de negócios"
             data-link="mansao-green.html"
           >
             <img class="project-img" src="imagens/mansao2.jpg" alt="Projeto Mansão Green" />
@@ -157,6 +164,7 @@
             class="project-card"
             data-nome="FLASH"
             data-desc="Short description of the project"
+            data-desc-pt="Breve descrição do projeto"
             data-link="#"
           >
             <img class="project-img" src="imagens/projeto-flash.png" alt="Projeto Flash" />
@@ -167,6 +175,7 @@
             class="project-card"
             data-nome="PROJETO 03"
             data-desc="Short description of the project"
+            data-desc-pt="Breve descrição do projeto"
             data-link="#"
           >
             <img class="project-img" src="imagens/projeto-03.png" alt="Projeto 03" />
@@ -179,7 +188,7 @@
           <div class="panel-meta">
             <p class="project-desc"></p>
             <!-- TODO: trocar o # pelo link real de cada projeto (data-link no article) -->
-            <a class="project-cta btn-roll" href="#">
+            <a class="project-cta btn-roll" href="#" data-pt="VER PROJETO &rarr;">
               <span class="roll">
                 <span class="roll-inner">
                   <span>VIEW PROJECT &rarr;</span>
@@ -202,12 +211,12 @@
       <div class="footer-inner">
         <div class="footer-cols">
           <div class="footer-col" data-reveal="up">
-            <p class="footer-label">EMAIL:</p>
+            <p class="footer-label" data-pt="E-MAIL:">EMAIL:</p>
             <a href="mailto:csaionaraa@gmail.com">csaionaraa@gmail.com</a>
           </div>
 
           <div class="footer-col" data-reveal="up" style="--d: 0.2s">
-            <p class="footer-label">SOCIAL MEDIA:</p>
+            <p class="footer-label" data-pt="REDES SOCIAIS:">SOCIAL MEDIA:</p>
             <div class="footer-social">
               <a href="https://www.linkedin.com/in/carla-saionara-araujo-47b14a226/" target="_blank" rel="noopener" aria-label="LinkedIn">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -224,8 +233,8 @@
         </div>
 
         <div class="footer-bottom">
-          <p>&copy; Copyright 2026. All Rights Reserved by <a href="#inicio">Carla Saionara</a></p>
-          <p>Created by <a href="#inicio">Carla Saionara</a></p>
+          <p><span data-pt="&copy; Copyright 2026. Todos os direitos reservados por">&copy; Copyright 2026. All Rights Reserved by</span> <a href="#inicio">Carla Saionara</a></p>
+          <p><span data-pt="Criado por">Created by</span> <a href="#inicio">Carla Saionara</a></p>
         </div>
       </div>
   </footer>

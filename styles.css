@@ -10,7 +10,7 @@
   --bg: #0a0a0a;
   --text: #f5f5f5;
   --text-muted: #a0a0a0;
-  --accent: #cc124a;
+  --accent: #ff477e;
   --glass-bg: rgba(255, 255, 255, 0.04);
   --surface: #1c1c1c;
   --border: rgba(255, 255, 255, 0.15);
@@ -235,6 +235,48 @@ main {
 }
 
 
+/* ===== Seletor de idioma (PT / EN) ===== */
+.lang-toggle {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.45);
+  transition: border-color 0.25s ease;
+}
+
+.lang-toggle:hover {
+  border-color: #ff006e;
+}
+
+/* o idioma ativo fica em destaque */
+.lang-toggle .is-on {
+  color: #ff006e;
+}
+
+/* na pagina de case o topo e claro */
+.case-page .lang-toggle {
+  border-color: rgba(19, 19, 19, 0.3);
+  color: rgba(19, 19, 19, 0.45);
+}
+
+.case-page .navbar.scrolled .lang-toggle {
+  border-color: var(--border);
+  color: rgba(255, 255, 255, 0.45);
+}
+
 /* ===== Botão hambúrguer (mobile) ===== */
 .menu-toggle {
   display: none;
@@ -386,7 +428,8 @@ main {
 /* Título fixo acima do painel: some conforme o painel toma a tela */
 .about-heading {
   position: absolute;
-  top: 11vh;
+  /* acima da borda do painel, que comeca em 13vh (74vh centralizados) */
+  top: 5vh;
   left: 50%;
   transform: translateX(-50%) translateY(calc(-30px * var(--p, 0)));
   font-family: var(--font-display);
@@ -402,9 +445,11 @@ main {
 /* --p (0 a 1) vem do JS: 0 = quadrado pequeno, 1 = tela inteira */
 .about-panel {
   position: relative;
-  width: calc(46% + 54% * var(--p, 0));
-  height: calc(52vh + 48vh * var(--p, 0));
-  border-radius: calc(34px - 34px * var(--p, 0));
+  /* comeca grande o bastante para o conteudo ja aparecer inteiro,
+     e cresce ate a tela toda conforme a rolagem */
+  width: calc(74% + 26% * var(--p, 0));
+  height: calc(74vh + 26vh * var(--p, 0));
+  border-radius: calc(30px - 30px * var(--p, 0));
   background: #121212;
   overflow: hidden;
   display: flex;
@@ -422,10 +467,9 @@ main {
   grid-template-columns: 1fr 0.85fr;
   align-items: center;
   gap: clamp(1.5rem, 5vw, 5rem);
-  /* --c tambem vem do JS: o conteudo entra depois que o painel abre */
-  opacity: var(--c, 0);
-  transform: translateY(calc(24px - 24px * var(--c, 0)));
-  transition: opacity 0.2s linear;
+  /* conteudo sempre visivel: so acompanha o crescimento do painel */
+  transform: scale(calc(0.93 + 0.07 * var(--p, 0)));
+  transform-origin: center;
 }
 
 .about-text {
@@ -1225,9 +1269,18 @@ main,
   transition-delay: calc(var(--i, 0) * 35ms + 0.15s);
 }
 
-body.pagina-entrando .nav-link .letra {
+body.pagina-entrando .nav-link .letra,
+body.letras-entrando .nav-link .letra {
   transform: translateY(110%);
   opacity: 0;
+  transition-delay: 0s;
+}
+
+/* Troca de idioma: o conteudo apaga, o texto muda, e ele volta */
+body.trocando-idioma main,
+body.trocando-idioma .footer {
+  opacity: 0;
+  transition: opacity 0.25s ease;
   transition-delay: 0s;
 }
 
@@ -1265,7 +1318,7 @@ body.sem-transicao .footer {
 
 /* ===== Footer ===== */
 .footer {
-  background: #ff4d8d;
+  background: #f16ba5;
   color: #121212;
   border-radius: 40px 40px 0 0;
   margin-top: 4rem;
@@ -1487,6 +1540,11 @@ body.sem-transicao .footer {
     z-index: 2;
   }
 
+  .lang-toggle {
+    right: 4.5rem;
+    z-index: 2;
+  }
+
   /* No case os links sao escuros (video claro atras), mas o painel do
      menu e escuro: dentro dele o texto precisa voltar a ser claro. */
   .case-page .nav-links .nav-link,
@@ -1542,7 +1600,8 @@ body.sem-transicao .footer {
     align-items: flex-start;
     justify-content: flex-end;
     gap: 1rem;
-    padding: 0 1.5rem 4rem;
+    /* folga maior embaixo: o proximo card sobe por ali e cobria o botao */
+    padding: 0 1.5rem 8rem;
   }
 
   .panel-list {
