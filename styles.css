@@ -581,6 +581,53 @@ main {
   }
 }
 
+/* ===== About no mobile: sem a animacao de crescer =====
+   Num celular a rolagem "presa" atrapalha mais do que ajuda:
+   aqui o bloco e um card normal, que entra com a revelacao padrao. */
+@media (max-width: 900px) {
+  .about-track {
+    height: auto;
+  }
+
+  .about-sticky {
+    position: static;
+    height: auto;
+    display: block;
+    /* sem padding lateral: o card encosta nas bordas da tela */
+    padding: 3rem 0 0;
+  }
+
+  .about-heading {
+    position: static;
+    transform: none;
+    opacity: 1;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-panel {
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+    /* o respiro fica aqui dentro, entre a borda e o conteudo */
+    padding: 2.5rem 1.5rem 3rem;
+  }
+
+  .about-content {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Projetos no mobile: sem o vao grande antes do titulo */
+  .projects {
+    padding: 3rem 0 0;
+  }
+
+  .projects-title {
+    margin-bottom: 2rem;
+  }
+}
+
 /* ===== Projetos (pastas de gaveta) ===== */
 .projects {
   position: relative;
@@ -848,9 +895,28 @@ main {
   background: #ededed;
 }
 
-/* Navbar sempre escura aqui: o conteudo abaixo e claro */
+/* No topo do case o video e claro: os links precisam ser escuros */
+.case-page .nav-links .nav-link,
+.case-page .nav-links .nav-link .roll-inner > span:first-child {
+  color: #131313;
+}
+
+.case-page .menu-toggle span {
+  background: #131313;
+}
+
+/* Ao rolar, a barra vira uma pilula escura: os links voltam a ser claros */
 .case-page .navbar.scrolled {
   background: rgba(18, 18, 18, 0.85);
+}
+
+.case-page .navbar.scrolled .nav-links .nav-link,
+.case-page .navbar.scrolled .nav-links .nav-link .roll-inner > span:first-child {
+  color: var(--nav-link);
+}
+
+.case-page .navbar.scrolled .menu-toggle span {
+  background: var(--text);
 }
 
 /* Area do video no topo */
@@ -872,6 +938,17 @@ main {
   object-fit: cover;
   display: block;
   border: 0;
+  /* nenhuma interacao: sem clique, sem pausa, sem menu de contexto */
+  pointer-events: none;
+  user-select: none;
+}
+
+/* esconde os controles nativos, inclusive os do iOS/Safari */
+.case-video video::-webkit-media-controls,
+.case-video video::-webkit-media-controls-enclosure,
+.case-video video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
 }
 
 /* Corpo claro do case */
@@ -1044,14 +1121,15 @@ main {
 /* Telas do projeto (fotos entram no lugar dos blocos) */
 .case-shots {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 3px;
   background: #ededed;
 }
 
 .case-shots figure {
-  aspect-ratio: 3 / 4;
-  background: #0a0a0a;
+  /* mockups de celular: quadro mais alto, sem cortar o aparelho */
+  aspect-ratio: 4 / 5;
+  background: #ededed;
   overflow: hidden;
 }
 
@@ -1086,9 +1164,13 @@ main {
 }
 
 @media (max-width: 720px) {
+  /* Quadro um pouco mais alto que o video (4:3): o conteudo fica maior,
+     cortando so um pouco das laterais. */
   .case-video {
-    height: 80vh;
-    min-height: 380px;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+    margin-top: 4.5rem;
   }
 
   .case-head {
@@ -1123,7 +1205,7 @@ main {
   }
 
   .case-shots figure {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 4 / 5;
   }
 }
 
@@ -1305,8 +1387,14 @@ body.sem-transicao .footer {
     justify-items: center;
     /* altura livre: com tudo empilhado, 100vh cortaria o conteúdo */
     min-height: auto;
-    gap: 1.25rem;
-    padding: 7rem 1.5rem 3rem;
+    gap: 0;
+    padding: 6rem 1.5rem 2.5rem;
+  }
+
+  /* o PNG tem area transparente em volta: as margens negativas
+     encostam a foto no texto de cima e de baixo */
+  .img {
+    margin: -2rem 0 -1.5rem;
   }
 
   .hero-text--left,
@@ -1331,7 +1419,7 @@ body.sem-transicao .footer {
   }
 
   .img img {
-    width: min(76vw, 400px);
+    width: min(90vw, 520px);
   }
 
   .img::before {
@@ -1341,12 +1429,19 @@ body.sem-transicao .footer {
 
 @media (max-width: 480px) {
   .hero {
-    padding: 6rem 1.25rem 2.5rem;
-    gap: 1rem;
+    padding: 5.5rem 1.25rem 2rem;
+  }
+
+  .hero-eyebrow {
+    margin-bottom: 0.4rem;
+  }
+
+  .img {
+    margin: -2.5rem 0 -2rem;
   }
 
   .img img {
-    width: 84vw;
+    width: 100%;
   }
 }
 
@@ -1360,39 +1455,52 @@ body.sem-transicao .footer {
     justify-content: flex-end;
   }
 
+  /* Menu desce do topo, na largura toda: nada de painel lateral */
   .nav-links {
     position: fixed;
     top: 0;
+    left: 0;
     right: 0;
-    height: 100vh;
-    width: 70%;
-    max-width: 300px;
+    width: 100%;
+    max-width: none;
+    height: auto;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 2.5rem;
+    gap: 1.75rem;
+    padding: 5.5rem 1.5rem 2.5rem;
     background: var(--nav-panel);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    transform: translateX(100%);
-    transition: transform 0.35s ease;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius: 0 0 26px 26px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    transform: translateY(-100%);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .nav-links.open {
-    transform: translateX(0);
+    transform: translateY(0);
   }
 
-  /* About no mobile: foto em cima, texto embaixo, painel quase cheio */
-  .about-track {
-    height: 200vh;
+  /* o botao fica acima do painel, para poder fechar */
+  .menu-toggle {
+    position: relative;
+    z-index: 2;
   }
 
-  .about-panel {
-    width: calc(84% + 16% * var(--p, 0));
-    height: calc(70vh + 30vh * var(--p, 0));
-    padding: 1.5rem;
+  /* No case os links sao escuros (video claro atras), mas o painel do
+     menu e escuro: dentro dele o texto precisa voltar a ser claro. */
+  .case-page .nav-links .nav-link,
+  .case-page .nav-links .nav-link .roll-inner > span:first-child {
+    color: var(--nav-link);
   }
 
+  .case-page .menu-toggle.open span {
+    background: var(--text);
+  }
+
+  /* About no mobile: foto em cima, texto embaixo.
+     A altura do trilho e o tamanho do painel ficam no bloco de 900px,
+     que desliga a animacao de crescer. */
   .about-content {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -1418,7 +1526,9 @@ body.sem-transicao .footer {
   .about-photo {
     justify-self: center;
     order: -1;
-    max-width: 200px;
+    /* no celular a foto ganha quase a largura toda do card */
+    width: 100%;
+    max-width: 340px;
   }
 
   .footer-cols {

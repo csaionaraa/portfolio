@@ -53,15 +53,23 @@ if (aboutTrack && aboutSticky && aboutContent) {
     aboutContent.style.setProperty("--c", conteudo.toFixed(3));
   }
 
-  if (semMovimento) {
-    // sem animação: painel aberto e conteúdo visível
-    aboutSticky.style.setProperty("--p", "1");
-    aboutContent.style.setProperty("--c", "1");
-  } else {
-    window.addEventListener("scroll", atualizarAbout, { passive: true });
-    window.addEventListener("resize", atualizarAbout);
+  // No celular o painel e estatico (ver o CSS): a animacao so roda no desktop
+  const telaGrande = window.matchMedia("(min-width: 901px)");
+
+  function ligarAbout() {
+    if (semMovimento || !telaGrande.matches) {
+      // painel aberto e conteúdo visível, sem depender da rolagem
+      aboutSticky.style.setProperty("--p", "1");
+      aboutContent.style.setProperty("--c", "1");
+      return;
+    }
     atualizarAbout();
   }
+
+  window.addEventListener("scroll", ligarAbout, { passive: true });
+  window.addEventListener("resize", ligarAbout);
+  telaGrande.addEventListener("change", ligarAbout);
+  ligarAbout();
 }
 
 // ===== Painel lateral dos projetos =====

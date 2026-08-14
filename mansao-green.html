@@ -57,10 +57,20 @@
   </header>
 
   <main>
-    <!-- Área do vídeo. Quando tiver o arquivo, troque o conteúdo por:
-         <video src="videos/mansao.mp4" autoplay muted loop playsinline poster="imagens/mansao2.jpg"></video> -->
-    <section class="case-video" aria-label="Vídeo do projeto">
-      <img src="imagens/mansao2.jpg" alt="" />
+    <!-- Vídeo decorativo: roda sozinho em loop, sem som e sem controles -->
+    <section class="case-video">
+      <video
+        src="imagens/lp1video-.mov"
+        autoplay
+        muted
+        loop
+        playsinline
+        disablepictureinpicture
+        disableremoteplayback
+        preload="auto"
+        tabindex="-1"
+        aria-hidden="true"
+      ></video>
     </section>
 
     <div class="case-body">
@@ -154,16 +164,13 @@
       </div>
     </div>
 
-    <!-- Telas do projeto: troque cada figure pela imagem correspondente -->
-    <section class="case-shots" aria-label="Telas do projeto">
+    <!-- Telas do projeto no celular -->
+    <section class="case-shots" aria-label="Telas do projeto no celular">
       <figure>
-        <!-- <img src="imagens/mansao-desktop.jpg" alt="Mansão Green no desktop" /> -->
+        <img src="imagens/mmobile2.jpg" alt="Mansão Green no celular — seção de resultados" />
       </figure>
       <figure>
-        <!-- <img src="imagens/mansao-tablet.jpg" alt="Mansão Green no tablet" /> -->
-      </figure>
-      <figure>
-        <!-- <img src="imagens/mansao-mobile.jpg" alt="Mansão Green no celular" /> -->
+        <img src="imagens/mmobile1.jpg" alt="Mansão Green no celular — página inicial" />
       </figure>
     </section>
 
