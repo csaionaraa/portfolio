@@ -568,6 +568,34 @@ main {
   border-color: #ff006e;
 }
 
+/* Botao de contato: preenchido em rosa, no hover fica vazado e o texto sobe em rosa */
+.btn-contact {
+  background: #ff006e;
+  border-color: #ff006e;
+  color: #fff;
+  box-shadow: 0 0 24px rgba(255, 0, 110, 0.35);
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease,
+              box-shadow 0.25s ease;
+}
+
+.btn-contact:hover {
+  background: transparent;
+  box-shadow: 0 0 0 rgba(255, 0, 110, 0);
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.8rem;
+}
+
+/* o bloco do hero ignora o mouse; o botao precisa receber o clique */
+.hero-cta {
+  pointer-events: auto;
+  margin-top: 1.6rem;
+  text-shadow: none;
+}
+
 .about-photo {
   justify-self: end;
   width: 100%;
@@ -1139,6 +1167,155 @@ main {
   max-width: 100%;
 }
 
+/* Ferramentas usadas no projeto */
+/* lista editorial: uma linha por ferramenta, separadas por um fio */
+.case-tools {
+  list-style: none;
+  margin-top: 2rem;
+  border-bottom: 1px solid rgba(19, 19, 19, 0.18);
+}
+
+.case-tool {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) minmax(0, 1.4fr);
+  grid-template-areas:
+    "num name desc"
+    "num role desc";
+  align-items: start;
+  column-gap: clamp(1rem, 3vw, 2.5rem);
+  padding: clamp(1.5rem, 3vw, 2.2rem) 0;
+  position: relative;
+  isolation: isolate;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s);
+}
+
+/* fio de cima: se desenha da esquerda pra direita quando a linha aparece */
+.case-tool::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(19, 19, 19, 0.18);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--d, 0s) + 0.15s),
+              opacity 0.3s ease;
+}
+
+.case-tool.revealed::after {
+  transform: scaleX(1);
+}
+
+/* painel escuro que sobe por tras da linha no hover; sai um pouco
+   pra fora das bordas, entao o texto nao se mexe */
+.case-tool::before {
+  content: "";
+  position: absolute;
+  inset: 0 -1.25rem;
+  z-index: -1;
+  background: #131313;
+  border-radius: 8px;
+  clip-path: inset(100% 0 0 0 round 8px);
+  transition: clip-path 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.case-tool-num {
+  grid-area: num;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  line-height: 2.4;
+  color: #ff006e;
+  letter-spacing: 1px;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  .case-tool:hover::before {
+    clip-path: inset(0 0 0 0 round 8px);
+  }
+
+  .case-tool:hover::after {
+    opacity: 0;
+  }
+
+  .case-tool:hover .case-tool-num {
+    transform: translateX(0.6rem);
+  }
+
+  .case-tool:hover .case-tool-role {
+    color: #9a9a9a;
+  }
+
+  .case-tool:hover p:last-child {
+    color: #d6d6d6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-tool::after {
+    transform: none;
+    transition: none;
+  }
+
+  .case-tool::before,
+  .case-tool-num {
+    transition: none;
+  }
+}
+
+.case-tool h3 {
+  grid-area: name;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.08em;
+  color: #131313;
+  transition: color 0.25s ease;
+}
+
+.case-tool:hover h3 {
+  color: #ff006e;
+}
+
+.case-tool-role {
+  grid-area: role;
+  margin-top: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6a6a6a;
+  transition: color 0.4s ease;
+}
+
+.case-tool p:last-child {
+  grid-area: desc;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  line-height: 1.55;
+  color: #2a2a2a;
+  transition: color 0.4s ease;
+}
+
+@media (max-width: 720px) {
+  .case-tool {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    grid-template-areas:
+      "num name"
+      "num role"
+      "num desc";
+  }
+
+  .case-tool p:last-child {
+    margin-top: 0.9rem;
+  }
+}
+
 .case-specimen h3 {
   font-family: var(--font-display);
   font-weight: 700;
@@ -1148,7 +1325,9 @@ main {
 }
 
 .specimen-sora,
-.specimen-poppins {
+.specimen-poppins,
+.specimen-anton,
+.specimen-instrument {
   font-size: clamp(0.9rem, 1.5vw, 1.1rem);
   line-height: 1.35;
   color: #4a4a4a;
@@ -1160,6 +1339,15 @@ main {
 
 .specimen-poppins {
   font-family: "Poppins", sans-serif;
+}
+
+.specimen-anton {
+  font-family: "Anton", sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.specimen-instrument {
+  font-family: "Instrument Sans", sans-serif;
 }
 
 /* Telas do projeto (fotos entram no lugar dos blocos) */
@@ -1187,7 +1375,8 @@ main {
 /* Volta para os projetos */
 .case-nav {
   background: #ededed;
-  padding: 2.5rem 1.5rem;
+  /* embaixo: +40px que o rodape cobre ao subir */
+  padding: 2.5rem 1.5rem calc(2.5rem + 40px);
   text-align: center;
 }
 
@@ -1321,7 +1510,11 @@ body.sem-transicao .footer {
   background: #f16ba5;
   color: #121212;
   border-radius: 40px 40px 0 0;
-  margin-top: 4rem;
+  /* sobe por cima da ultima secao: sem faixa preta, e o que vem antes
+     (a imagem do projeto, o fundo do case) aparece atras dos cantos */
+  position: relative;
+  z-index: 4;
+  margin-top: -40px;
   padding: 2.5rem 2rem 1.5rem;
 }
 
@@ -1457,12 +1650,16 @@ body.sem-transicao .footer {
     margin: 0;
   }
 
-  /* a foto entra entre os dois blocos de texto */
+  /* no celular: boas-vindas em cima, foto no meio, nome + botao embaixo */
+  .hero-text--right {
+    order: 1;
+  }
+
   .img {
     order: 2;
   }
 
-  .hero-text--right {
+  .hero-text--left {
     order: 3;
   }
 
@@ -1471,8 +1668,47 @@ body.sem-transicao .footer {
     font-size: clamp(1.9rem, 7.5vw, 3rem);
   }
 
+  /* boas-vindas numa linha so, menor que o titulo */
+  .hero-welcome {
+    font-size: clamp(1.1rem, 5vw, 1.8rem);
+  }
+
+  .hero-welcome br,
+  .hero-title br {
+    display: none;
+  }
+
+  .hero-welcome > span + br + span,
+  .hero-welcome > span + br + .hero-highlight {
+    margin-left: 0.2em;
+  }
+
+  .hero-cta {
+    margin-top: 1.1rem;
+    padding: 0.65rem 1.4rem;
+    font-size: 0.8rem;
+    box-shadow: 0 0 16px rgba(255, 0, 110, 0.3);
+  }
+
+  /* o PNG tem muita area transparente: a foto passa um pouco da tela
+     pra pessoa aparecer maior, e o hero corta o excesso nas laterais */
+  .hero {
+    /* minmax(0, 1fr): a coluna nao cresce junto com a foto */
+    grid-template-columns: minmax(0, 1fr);
+    overflow-x: clip;
+  }
+
+  /* a foto fica centralizada mesmo sendo mais larga que a coluna */
+  .img {
+    justify-self: stretch;
+    display: flex;
+    justify-content: center;
+  }
+
   .img img {
-    width: min(90vw, 520px);
+    flex: none;
+    max-width: none;
+    width: min(120vw, 640px);
   }
 
   .img::before {
@@ -1490,11 +1726,7 @@ body.sem-transicao .footer {
   }
 
   .img {
-    margin: -2.5rem 0 -2rem;
-  }
-
-  .img img {
-    width: 100%;
+    margin: -3rem 0 -2.5rem;
   }
 }
 
@@ -1568,6 +1800,10 @@ body.sem-transicao .footer {
 
   .about-text {
     align-items: center;
+  }
+
+  .btn-group {
+    justify-content: center;
   }
 
   .about-title,
