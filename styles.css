@@ -1117,6 +1117,17 @@ main {
   line-height: 1;
 }
 
+.design-gallery-heading .design-gallery-description {
+  max-width: 48rem;
+  margin: 1.25rem auto 0;
+  color: var(--text-muted);
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.7;
+  text-transform: none;
+}
+
 .design-page .design-gallery--page {
   width: 100%;
   max-width: 1280px;
@@ -2592,6 +2603,25 @@ body.sem-transicao .footer {
   z-index: 4;
   margin-top: -40px;
   padding: 2.5rem 2rem 1.5rem;
+}
+
+.design-page .footer {
+  background: #0a0a0a;
+  color: #f5f5f5;
+}
+
+.design-page .footer-cols {
+  border-bottom-color: rgba(255, 255, 255, 0.25);
+}
+
+.design-page .footer-col a,
+.design-page .footer-social a,
+.design-page .footer-bottom a {
+  color: #f5f5f5;
+}
+
+.design-page .footer-social a:hover {
+  color: #ff006e;
 }
 
 .footer-inner {
