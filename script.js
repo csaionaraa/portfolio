@@ -434,6 +434,15 @@ function montarRoll(el, texto) {
 function aplicarIdioma(idioma) {
   document.documentElement.lang = idioma === "pt" ? "pt-BR" : "en";
 
+  document.querySelectorAll(".resume-download").forEach((link) => {
+    const downloadPath = idioma === "pt"
+      ? link.dataset.downloadPt
+      : link.dataset.downloadEn;
+    const downloadName = idioma === "pt" ? "curriculo.pdf" : "resume.pdf";
+    link.href = downloadPath;
+    link.download = downloadName;
+  });
+
   document.querySelectorAll("[data-pt]").forEach((el) => {
     if (!el.dataset.en) el.dataset.en = textoBase(el);
     const texto = idioma === "pt" ? el.dataset.pt : el.dataset.en;
