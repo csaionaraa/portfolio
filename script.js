@@ -302,9 +302,8 @@ function embaralhar(el) {
       requestAnimationFrame(frame);
     } else {
       el.innerHTML = texto;
-      el.dataset.rodando = "";
-      // pausa com a palavra inteira legível antes de recomeçar
-      setTimeout(() => rodarSeVisivel(el), 3000);
+      el.dataset.animado = "sim";
+      delete el.dataset.rodando;
     }
   }
 
@@ -331,8 +330,10 @@ document.querySelectorAll(".scramble").forEach((el) => {
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      el.dataset.visivel = entry.isIntersecting ? "sim" : "nao";
-      if (entry.isIntersecting) rodarSeVisivel(el);
+      if (!entry.isIntersecting || el.dataset.animado === "sim") return;
+      el.dataset.visivel = "sim";
+      rodarSeVisivel(el);
+      observer.unobserve(el);
     });
   });
 
