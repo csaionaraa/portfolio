@@ -946,11 +946,12 @@ main {
 
 .service-preview-track img {
   display: block;
-  width: clamp(7rem, 12vw, 12rem);
+  width: clamp(14rem, 22vw, 24rem);
   height: 100%;
   flex: 0 0 auto;
   background: #0a0a0a;
-  object-fit: contain;
+  object-fit: cover;
+  transform: scale(1.2);
 }
 
 .service-link:hover .service-preview,
@@ -1230,6 +1231,7 @@ main {
 
   .service-preview-track img {
     object-fit: cover;
+    transform: scale(1.2);
   }
 
   .service-projects {
