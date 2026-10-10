@@ -106,6 +106,16 @@ main {
     signature-float 3s ease-in-out 1.5s infinite;
 }
 
+@media (max-width: 600px) {
+  .site-loader span {
+    padding: 0.5rem;
+    font-size: clamp(2rem, 10vw, 3rem);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+}
+
 @keyframes signature-write {
   to {
     clip-path: inset(0);
@@ -646,17 +656,62 @@ main {
 
 /* Botao de contato: preenchido em rosa, no hover fica vazado e o texto sobe em rosa */
 .btn-contact {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background: #ff006e;
   border-color: #ff006e;
   color: #fff;
-  box-shadow: 0 0 24px rgba(255, 0, 110, 0.35);
-  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease,
-              box-shadow 0.25s ease;
+  box-shadow: none;
+  animation: contact-button-pulse 2.4s ease-in-out infinite;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.btn-contact::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 75%
+  );
+  content: "";
+  transform: translateX(-120%);
+  animation: contact-button-shine 3.2s ease-in-out infinite;
+}
+
+.btn-contact .roll {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes contact-button-pulse {
+  0%, 100% {
+    background-color: #ff006e;
+    border-color: #ff006e;
+    transform: scale(1);
+  }
+  50% {
+    background-color: #ff287f;
+    border-color: #ff75a8;
+    transform: scale(1.035);
+  }
+}
+
+@keyframes contact-button-shine {
+  0%, 35% { transform: translateX(-120%); }
+  75%, 100% { transform: translateX(120%); }
 }
 
 .btn-contact:hover {
   background: transparent;
-  box-shadow: 0 0 0 rgba(255, 0, 110, 0);
+  animation: none;
+}
+
+.btn-contact:hover::before {
+  animation: none;
 }
 
 .btn-group {
@@ -1309,6 +1364,11 @@ main {
 @media (prefers-reduced-motion: reduce) {
   .project-choice-card,
   .project-choice-arrow { transition: none; }
+
+  .btn-contact,
+  .btn-contact::before {
+    animation: none;
+  }
 }
 
 .projects-layout {
@@ -2717,7 +2777,6 @@ body.sem-transicao .footer {
     margin-top: 1.1rem;
     padding: 0.65rem 1.4rem;
     font-size: 0.8rem;
-    box-shadow: 0 0 16px rgba(255, 0, 110, 0.3);
   }
 
   /* o PNG tem muita area transparente: a foto passa um pouco da tela
