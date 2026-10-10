@@ -29,6 +29,50 @@ navLinks.querySelectorAll("a").forEach((link) => {
   });
 });
 
+const serviceButtons = document.querySelectorAll("button.service-link");
+
+serviceButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const wasExpanded = button.getAttribute("aria-expanded") === "true";
+
+    serviceButtons.forEach((serviceButton) => {
+      serviceButton.setAttribute("aria-expanded", "false");
+      document.getElementById(serviceButton.getAttribute("aria-controls")).hidden = true;
+    });
+
+    if (wasExpanded) return;
+
+    document.getElementById(button.getAttribute("aria-controls")).hidden = false;
+    button.setAttribute("aria-expanded", "true");
+  });
+});
+
+const artworkModal = document.getElementById("artwork-modal");
+const artworkModalImage = artworkModal?.querySelector(".artwork-modal-image");
+const artworkModalClose = artworkModal?.querySelector(".artwork-modal-close");
+
+if (artworkModal && artworkModalImage && artworkModalClose) {
+  document.querySelectorAll(".design-artwork").forEach((artwork) => {
+    artwork.addEventListener("click", () => {
+      artworkModalImage.src = artwork.dataset.fullImage;
+      artworkModalImage.alt = artwork.dataset.imageAlt || "";
+      artworkModal.showModal();
+    });
+  });
+
+  artworkModalClose.addEventListener("click", () => artworkModal.close());
+  artworkModal.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") artworkModal.close();
+  });
+  artworkModal.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    artworkModal.close();
+  });
+  artworkModal.addEventListener("click", (event) => {
+    if (event.target === artworkModal) artworkModal.close();
+  });
+}
+
 // ===== About: painel que cresce até a tela inteira conforme a rolagem =====
 const aboutTrack = document.querySelector(".about-track");
 const aboutSticky = document.querySelector(".about-sticky");

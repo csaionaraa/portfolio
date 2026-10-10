@@ -10,6 +10,10 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="site-loader" aria-hidden="true">
+    <span>Carla Saionara</span>
+  </div>
+
   <!-- Navbar com efeito glass -->
   <header class="navbar" id="navbar">
     <nav class="nav-container">
@@ -68,7 +72,7 @@
     <section id="inicio" class="hero">
       <div class="hero-text hero-text--left">
         <p class="hero-eyebrow" data-reveal="left">CARLA SAIONARA</p>
-        <h1 class="hero-title" data-reveal="left" style="--d: 0.12s">DESIGNER <br />UX/UI &amp; <br />WEB DESIGNER</h1>
+        <h1 class="hero-title" data-reveal="left" style="--d: 0.12s">DESIGNER, <br /> UX/UI &amp; <br /> WEB DESIGNER</h1>
         <a href="mailto:csaionaraa@gmail.com?subject=Contato%20pelo%20portf%C3%B3lio" class="btn-outline btn-contact btn-roll hero-cta" data-reveal="left" data-pt="ENTRE EM CONTATO" style="--d: 0.36s">
           <span class="roll">
             <span class="roll-inner">
@@ -161,54 +165,90 @@
     </section>
 
     <section id="projetos" class="projects">
-      <h2 class="projects-title" data-reveal="up" aria-label="Projects">
-        <span class="scramble" data-texto="PROJECTS" data-pt="PROJETOS" aria-hidden="true">PROJECTS</span>
+      <h2 class="projects-title" data-reveal="up" aria-label="Services / Serviços">
+        <span class="scramble" data-texto="SERVICES" data-pt="SERVIÇOS" aria-hidden="true">SERVICES</span>
       </h2>
 
-      <div class="projects-layout">
-        <div class="stack">
-          <!-- Duplique um article para cada projeto: o texto ao lado sai daqui -->
-          <article
-            class="project-card"
-            data-nome="MANSÃO GREEN"
-            data-desc="Landing page for agency and business ecosystem"
-            data-desc-pt="Landing page para uma agência e ecossistema de negócios"
-            data-link="mansao-green.html"
-          >
-            <img class="project-img" src="imagens/mansao2.jpg" alt="Projeto Mansão Green" />
-            <a class="project-cover" href="mansao-green.html" aria-label="Ver o case do projeto Mansão Green"></a>
-          </article>
-
-          <article
-            class="project-card"
-            data-nome="LUCANETA"
-            data-desc="Website for Escolinha do Lucaneta, a football school"
-            data-desc-pt="Site para a Escolinha do Lucaneta, escola de futebol"
-            data-link="lucaneta.html"
-          >
-            <img class="project-img" src="imagens/sitelucaneta.png" alt="Projeto Escolinha do Lucaneta" />
-            <a class="project-cover" href="lucaneta.html" aria-label="Ver o case do projeto Escolinha do Lucaneta"></a>
-          </article>
-        </div>
-
-        <!-- Camada por cima das imagens: texto à esquerda, nomes à direita -->
-        <aside class="projects-panel">
-          <div class="panel-meta">
-            <p class="project-desc"></p>
-            <!-- TODO: trocar o # pelo link real de cada projeto (data-link no article) -->
-            <a class="project-cta btn-roll" href="#" data-pt="VER PROJETO &rarr;">
-              <span class="roll">
-                <span class="roll-inner">
-                  <span>VIEW PROJECT &rarr;</span>
-                  <span aria-hidden="true">VIEW PROJECT &rarr;</span>
-                </span>
+      <nav class="services-nav" aria-label="Serviços" data-reveal="up">
+        <div class="service-item">
+          <button class="service-link" type="button" data-number="01" data-service-en="Web Design" data-service-pt="Web Design" aria-expanded="false" aria-controls="web-service-projects">
+            <span class="service-link-label" data-pt="Web Design">Web Design</span>
+            <span class="service-preview" aria-hidden="true">
+              <span class="service-preview-track">
+                <img src="imagens/mansao2.jpg" alt="" /><img src="imagens/sitelucaneta.png" alt="" />
+                <img src="imagens/mansao2.jpg" alt="" /><img src="imagens/sitelucaneta.png" alt="" />
+                <img src="imagens/mansao2.jpg" alt="" /><img src="imagens/sitelucaneta.png" alt="" />
+                <img src="imagens/mansao2.jpg" alt="" /><img src="imagens/sitelucaneta.png" alt="" />
               </span>
-            </a>
-          </div>
-
-          <ol class="panel-list"></ol>
-        </aside>
-      </div>
+            </span>
+          </button>
+          <section class="service-projects" id="web-service-projects" aria-labelledby="web-service-projects-title" hidden>
+            <div class="service-projects-header">
+              <p class="service-projects-kicker" data-pt="PROJETOS EM DESTAQUE">FEATURED PROJECTS</p>
+              <h3 id="web-service-projects-title" data-pt="Projetos de Web Design">Web Design Projects</h3>
+            </div>
+            <div class="service-projects-list">
+              <a class="project-choice-card" href="mansao-green.html">
+                <span class="project-choice-copy"><strong>Mansão Green</strong></span>
+                <span class="project-choice-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+              <a class="project-choice-card" href="lucaneta.html">
+                <span class="project-choice-copy"><strong>Escolinha do Lucaneta</strong></span>
+                <span class="project-choice-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            </div>
+          </section>
+        </div>
+        <div class="service-item">
+          <a class="service-link" href="design.html" data-number="02" data-service-en="Design" data-service-pt="Design">
+            <span class="service-link-label" data-pt="Design">Design</span>
+            <span class="service-preview" aria-hidden="true">
+              <span class="service-preview-track">
+                <img src="imagens/design/BINGOSESPECIAIS-864x1080.webp" alt="" />
+                <img src="imagens/design/Camada-74.webp" alt="" />
+                <img src="imagens/design/Camada-78.webp" alt="" />
+                <img src="imagens/design/CARCARA.png" alt="" />
+                <img src="imagens/design/gratuito.webp" alt="" />
+                <img src="imagens/design/grupo-copa.webp" alt="" />
+                <img src="imagens/design/GRUPOVIP (1).webp" alt="" />
+                <img src="imagens/design/grupovip.webp" alt="" />
+                <img src="imagens/design/vipvip.webp" alt="" />
+                <img src="imagens/design/ZARA POSTER.png" alt="" />
+                <img src="imagens/design/BINGOSESPECIAIS-864x1080.webp" alt="" />
+                <img src="imagens/design/Camada-74.webp" alt="" />
+                <img src="imagens/design/Camada-78.webp" alt="" />
+                <img src="imagens/design/CARCARA.png" alt="" />
+                <img src="imagens/design/gratuito.webp" alt="" />
+                <img src="imagens/design/grupo-copa.webp" alt="" />
+                <img src="imagens/design/GRUPOVIP (1).webp" alt="" />
+                <img src="imagens/design/grupovip.webp" alt="" />
+                <img src="imagens/design/vipvip.webp" alt="" />
+                <img src="imagens/design/ZARA POSTER.png" alt="" />
+              </span>
+            </span>
+          </a>
+        </div>
+        <div class="service-item">
+          <button class="service-link" type="button" data-number="03" data-service-en="Visual Identity" data-service-pt="Identidade Visual" aria-expanded="false" aria-controls="identity-service-projects">
+            <span class="service-link-label" data-pt="Identidade Visual">Visual Identity</span>
+            <span class="service-preview" aria-hidden="true">
+              <span class="service-preview-track">
+                <img src="imagens/alecrim.png" alt="" /><img src="imagens/carla.png" alt="" />
+                <img src="imagens/alecrim.png" alt="" /><img src="imagens/carla.png" alt="" />
+                <img src="imagens/alecrim.png" alt="" /><img src="imagens/carla.png" alt="" />
+                <img src="imagens/alecrim.png" alt="" /><img src="imagens/carla.png" alt="" />
+              </span>
+            </span>
+          </button>
+          <section class="service-projects" id="identity-service-projects" aria-labelledby="identity-service-projects-title" hidden>
+            <div class="service-projects-header">
+              <p class="service-projects-kicker" data-pt="PROJETO">PROJECT</p>
+              <h3 id="identity-service-projects-title" data-pt="Identidade Visual">Visual Identity</h3>
+            </div>
+            <p class="service-projects-note" data-pt="Novos projetos de identidade visual em breve.">New visual identity projects coming soon.</p>
+          </section>
+        </div>
+      </nav>
 
     </section>
 
