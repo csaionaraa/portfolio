@@ -217,6 +217,7 @@ main {
   z-index: 1000;
   background: transparent;
   border-radius: 0;
+  box-shadow: none;
   transition: background 0.35s ease,
               backdrop-filter 0.35s ease,
               opacity 0.6s ease,
@@ -397,6 +398,7 @@ main {
 .hero-text {
   position: relative;
   z-index: 2;
+  width: min(100%, 20.5rem);
   pointer-events: none;
 }
 
@@ -1975,6 +1977,412 @@ main {
   }
 }
 
+/* ===== Alecrim e Sol: apresentação de identidade visual ===== */
+.alecrim-page {
+  background: #ededed;
+  color: #131313;
+}
+
+.alecrim-marquee {
+  overflow: hidden;
+  width: 100%;
+  padding-block: 0.75rem;
+}
+
+.alecrim-marquee-track,
+.alecrim-marquee-set {
+  display: flex;
+  width: max-content;
+  gap: 0.75rem;
+}
+
+.alecrim-marquee-track {
+  animation: alecrim-marquee 46s linear infinite;
+}
+
+.alecrim-marquee-set img {
+  display: block;
+  width: clamp(17rem, 31vw, 31rem);
+  height: clamp(17rem, 31vw, 31rem);
+  background: #eeece3;
+  object-fit: cover;
+}
+
+@keyframes alecrim-marquee {
+  to { transform: translateX(-50%); }
+}
+
+.alecrim-page .case-video.alecrim-carousel {
+  height: 72svh;
+  min-height: 430px;
+  margin-bottom: clamp(1.5rem, 4vw, 3rem);
+  background: #ededed;
+}
+
+.alecrim-page .alecrim-marquee {
+  height: 100%;
+  padding: 0;
+}
+
+.alecrim-page .alecrim-marquee-track {
+  height: 100%;
+  gap: 0;
+}
+
+.alecrim-page .alecrim-marquee-set {
+  height: 100%;
+  gap: 0;
+  padding-right: 0;
+}
+
+.alecrim-page .alecrim-marquee-set img {
+  flex: 0 0 auto;
+  width: auto;
+  height: 100%;
+  background: #ededed;
+  object-fit: contain;
+}
+
+.alecrim-marquee-caption {
+  width: min(100% - 3rem, 1200px);
+  margin: 0.8rem auto 0;
+  color: var(--alecrim-muted);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-align: right;
+}
+
+.alecrim-intro,
+.alecrim-brief,
+.alecrim-visual-system,
+.alecrim-applications {
+  width: min(100% - 3rem, 1200px);
+  margin-inline: auto;
+  padding-block: clamp(4rem, 9vw, 8rem);
+}
+
+.alecrim-section-index {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(45, 48, 35, 0.2);
+}
+
+.alecrim-section-index span:first-child {
+  color: var(--alecrim-brown);
+}
+
+.alecrim-intro-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.8fr);
+  gap: clamp(2rem, 8vw, 8rem);
+  padding-top: clamp(2rem, 5vw, 4.5rem);
+}
+
+.alecrim-intro-content h2 {
+  max-width: 15ch;
+  color: var(--alecrim-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.2rem, 5.4vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 1.04;
+}
+
+.alecrim-description {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: #515247;
+  font-size: clamp(0.96rem, 1.3vw, 1.08rem);
+  line-height: 1.8;
+}
+
+.alecrim-brief {
+  max-width: none;
+  width: 100%;
+  padding-inline: max(1.5rem, calc((100% - 1200px) / 2));
+  background: #eeece3;
+}
+
+.alecrim-section-title {
+  margin-top: clamp(2rem, 5vw, 4rem);
+  color: var(--alecrim-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.4rem, 5.5vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 1;
+}
+
+.alecrim-brief-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: clamp(2rem, 5vw, 4rem);
+  border-top: 1px solid rgba(45, 48, 35, 0.2);
+}
+
+.alecrim-brief-item {
+  min-height: 14rem;
+  padding: 1.5rem clamp(1rem, 3vw, 2.5rem) 2rem 0;
+  border-bottom: 1px solid rgba(45, 48, 35, 0.2);
+}
+
+.alecrim-brief-item:nth-child(odd) {
+  border-right: 1px solid rgba(45, 48, 35, 0.2);
+}
+
+.alecrim-brief-item:nth-child(even) {
+  padding-left: clamp(1rem, 3vw, 2.5rem);
+}
+
+.alecrim-brief-number {
+  color: var(--alecrim-brown);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+}
+
+.alecrim-brief-item h3 {
+  margin: 1rem 0 0.75rem;
+  color: var(--alecrim-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  font-weight: 400;
+}
+
+.alecrim-brief-item p,
+.alecrim-competitors {
+  max-width: 55ch;
+  color: #515247;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.alecrim-brief-item p + p {
+  margin-top: 0.8rem;
+}
+
+.alecrim-competitors {
+  padding-left: 1.2rem;
+}
+
+.alecrim-system-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+  gap: clamp(2rem, 7vw, 7rem);
+  margin-top: clamp(2rem, 5vw, 4rem);
+}
+
+.alecrim-system-grid .alecrim-section-title {
+  margin: 0 0 2rem;
+}
+
+.alecrim-type-card {
+  padding-block: 1.5rem 2rem;
+  border-top: 1px solid rgba(45, 48, 35, 0.2);
+}
+
+.alecrim-type-name {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--alecrim-ink);
+  font-size: 1rem;
+}
+
+.alecrim-type-name span {
+  color: var(--alecrim-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.alecrim-type-specimen {
+  margin-block: 1.3rem;
+  color: var(--alecrim-green);
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  letter-spacing: -0.06em;
+  line-height: 0.98;
+}
+
+.alecrim-type-card--serif .alecrim-type-specimen {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+
+.alecrim-type-card--sans .alecrim-type-specimen {
+  font-family: Arial, sans-serif;
+  font-size: clamp(1.8rem, 3.8vw, 3.4rem);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+}
+
+.alecrim-type-card > p:last-child {
+  max-width: 58ch;
+  color: #515247;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.alecrim-palette {
+  list-style: none;
+}
+
+.alecrim-palette li {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) auto;
+  grid-template-areas:
+    "swatch name hex"
+    "swatch value value";
+  align-items: center;
+  column-gap: 1rem;
+  padding-block: 1rem;
+  border-top: 1px solid rgba(45, 48, 35, 0.2);
+}
+
+.alecrim-swatch {
+  grid-area: swatch;
+  width: 4rem;
+  aspect-ratio: 1;
+  background: var(--swatch);
+}
+
+.alecrim-swatch--white {
+  outline: 1px solid rgba(45, 48, 35, 0.16);
+  outline-offset: -1px;
+}
+
+.alecrim-color-name {
+  grid-area: name;
+  color: var(--alecrim-ink);
+  font-size: 0.9rem;
+}
+
+.alecrim-color-hex {
+  grid-area: hex;
+  color: var(--alecrim-ink);
+  font-size: 0.85rem;
+}
+
+.alecrim-color-value {
+  grid-area: value;
+  align-self: start;
+  margin-top: 0.35rem;
+  color: var(--alecrim-muted);
+  font-size: 0.72rem;
+}
+
+.alecrim-applications {
+  padding-top: 0;
+}
+
+.alecrim-applications-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.alecrim-applications-heading .alecrim-section-title {
+  max-width: 13ch;
+}
+
+.alecrim-manual-link {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--alecrim-brown);
+  color: var(--alecrim-brown);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: gap 0.25s ease;
+}
+
+.alecrim-manual-link:hover {
+  gap: 1.5rem;
+}
+
+.alecrim-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 3.5rem) 1.5rem;
+  margin-top: clamp(2rem, 5vw, 4rem);
+}
+
+.alecrim-gallery-item {
+  min-width: 0;
+}
+
+.alecrim-gallery-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #eeece3;
+}
+
+.alecrim-gallery-item--logo img {
+  width: min(100%, 36rem);
+  margin-inline: auto;
+}
+
+.alecrim-gallery-item--wide {
+  grid-column: span 2;
+}
+
+.alecrim-gallery-item figcaption {
+  margin-top: 0.75rem;
+  color: var(--alecrim-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.alecrim-back {
+  padding: 2rem 1.5rem 4rem;
+  background: var(--alecrim-paper);
+  text-align: center;
+}
+
+.alecrim-page .case-back {
+  border-color: rgba(45, 48, 35, 0.35);
+  color: var(--alecrim-ink);
+}
+
+.alecrim-page .case-back:hover {
+  border-color: var(--alecrim-brown);
+  color: var(--alecrim-brown);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alecrim-page .alecrim-marquee-track {
+    animation: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .alecrim-page .case-video.alecrim-carousel {
+    height: 42svh;
+    min-height: 260px;
+    margin-top: 4.5rem;
+    aspect-ratio: auto;
+  }
+
+  .alecrim-page .alecrim-shots figure {
+    aspect-ratio: auto;
+    height: auto;
+  }
+
+  .alecrim-page .alecrim-shots img {
+    height: auto;
+    object-fit: contain;
+  }
+}
+
 /* ===== Transicao entre paginas =====
    Sem cortina: navbar e conteudo entram juntos, em cascata. */
 main,
@@ -2310,7 +2718,7 @@ body.sem-transicao .footer {
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     border-radius: 0 0 26px 26px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    box-shadow: none;
     transform: translateY(-100%);
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
