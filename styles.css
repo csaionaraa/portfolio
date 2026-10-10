@@ -962,9 +962,11 @@ main {
   visibility: visible;
 }
 
-.service-link[aria-expanded="true"] .service-preview {
-  opacity: 0;
-  visibility: hidden;
+@media (min-width: 601px) {
+  .service-link[aria-expanded="true"] .service-preview {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .service-link:hover .service-preview-track,
@@ -1242,6 +1244,40 @@ main {
   .service-preview-track img {
     object-fit: cover;
     transform: scale(1.2);
+  }
+
+  .service-link:hover {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .service-link:hover::after {
+    color: rgba(255, 255, 255, 0.55);
+    transform: none;
+  }
+
+  .service-link:hover .service-link-label {
+    transform: none;
+  }
+
+  .service-link:hover .service-preview,
+  .service-link:focus-visible .service-preview {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .service-item .service-link[aria-expanded="true"] .service-preview {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: none;
+  }
+
+  .service-link:hover .service-preview-track,
+  .service-link:focus-visible .service-preview-track {
+    animation: none;
+  }
+
+  .service-link[aria-expanded="true"] .service-preview-track {
+    animation: service-preview-scroll 20s linear infinite;
   }
 
   .service-projects {
@@ -1636,14 +1672,39 @@ main {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 1.2rem;
+  padding: 0.75rem;
 }
 
 .case-colors span {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #fff;
+}
+
+.case-color-info {
+  width: 100%;
+  min-width: 0;
+  text-align: center;
+}
+
+.case-colors .case-color-title {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+
+.case-colors .case-color-codes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.case-colors .case-color-codes span {
+  display: block;
+  font-size: 0.68rem;
+  line-height: 1.3;
 }
 
 /* fundos claros pedem texto escuro */
@@ -1983,6 +2044,10 @@ main {
   color: #131313;
 }
 
+.alecrim-page .case-color-info {
+  text-align: left;
+}
+
 .alecrim-marquee {
   overflow: hidden;
   width: 100%;
@@ -2013,23 +2078,33 @@ main {
 }
 
 .alecrim-page .case-video.alecrim-carousel {
-  height: 72svh;
-  min-height: 430px;
+  display: flex;
+  height: calc(72svh + 2.5rem);
+  min-height: calc(430px + 2.5rem);
+  flex-direction: column;
   margin-bottom: clamp(1.5rem, 4vw, 3rem);
   background: #ededed;
 }
 
 .alecrim-page .alecrim-marquee {
-  height: 100%;
+  height: auto;
+  min-height: 0;
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
   padding: 0;
 }
 
 .alecrim-page .alecrim-marquee-track {
   height: 100%;
   gap: 0;
+  animation: alecrim-carousel-loop 60s linear infinite;
+  will-change: transform;
 }
 
 .alecrim-page .alecrim-marquee-set {
+  display: flex;
+  flex: 0 0 auto;
   height: 100%;
   gap: 0;
   padding-right: 0;
@@ -2041,6 +2116,10 @@ main {
   height: 100%;
   background: #ededed;
   object-fit: contain;
+}
+
+@keyframes alecrim-carousel-loop {
+  to { transform: translateX(-33.333333%); }
 }
 
 .alecrim-marquee-caption {
@@ -2361,26 +2440,22 @@ main {
 @media (prefers-reduced-motion: reduce) {
   .alecrim-page .alecrim-marquee-track {
     animation: none;
+    transform: none;
   }
 }
 
 @media (max-width: 720px) {
-  .alecrim-page .case-video.alecrim-carousel {
-    height: 42svh;
-    min-height: 260px;
-    margin-top: 4.5rem;
-    aspect-ratio: auto;
-  }
-
-  .alecrim-page .alecrim-shots figure {
-    aspect-ratio: auto;
-    height: auto;
-  }
-
-  .alecrim-page .alecrim-shots img {
-    height: auto;
-    object-fit: contain;
-  }
+  .alecrim-page .case-video.alecrim-carousel { height: 42svh; min-height: 260px; margin-top: 4.5rem; aspect-ratio: auto; }
+  .alecrim-page .case-colors { grid-template-columns: 1fr; gap: 0.6rem; }
+  .alecrim-page .case-colors li { min-width: 0; height: 145px; padding: 0.75rem; align-items: flex-end; justify-content: flex-start; }
+  .alecrim-page .case-color-info { text-align: left; }
+  .alecrim-page .case-colors .case-color-title { font-size: 0.68rem; }
+  .alecrim-page .case-colors .case-color-codes span { font-size: 0.56rem; overflow-wrap: anywhere; }
+  .alecrim-page .case-body { padding-bottom: 0.75rem; }
+  .alecrim-page .case-body > .case-inner > .case-title--sub:last-child { margin-bottom: 0.5rem; }
+  .alecrim-page .alecrim-shots { grid-template-columns: 1fr; gap: 0; }
+  .alecrim-page .alecrim-shots figure { height: auto; aspect-ratio: auto; }
+  .alecrim-page .alecrim-shots img { height: auto; object-fit: contain; }
 }
 
 /* ===== Transicao entre paginas =====

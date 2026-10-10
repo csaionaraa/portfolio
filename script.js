@@ -47,68 +47,6 @@ serviceButtons.forEach((button) => {
   });
 });
 
-const alecrimCarousel = document.getElementById("alecrim-carousel");
-
-if (alecrimCarousel) {
-  const slides = [...alecrimCarousel.querySelectorAll(".alecrim-marquee-track > img")];
-  const dots = [...alecrimCarousel.querySelectorAll("[data-carousel-dot]")];
-  let activeSlide = 0;
-
-  function mostrarSlide(index) {
-    activeSlide = (index + slides.length) % slides.length;
-    const slide = slides[activeSlide];
-    const left =
-      slide.getBoundingClientRect().left -
-      alecrimCarousel.getBoundingClientRect().left +
-      alecrimCarousel.scrollLeft;
-
-    alecrimCarousel.scrollTo({ left, behavior: semMovimento ? "auto" : "smooth" });
-    dots.forEach((dot, dotIndex) => {
-      if (dotIndex === activeSlide) {
-        dot.setAttribute("aria-current", "true");
-      } else {
-        dot.removeAttribute("aria-current");
-      }
-    });
-  }
-
-  alecrimCarousel.querySelector("[data-carousel-prev]")?.addEventListener("click", () => {
-    mostrarSlide(activeSlide - 1);
-  });
-  alecrimCarousel.querySelector("[data-carousel-next]")?.addEventListener("click", () => {
-    mostrarSlide(activeSlide + 1);
-  });
-  dots.forEach((dot, index) => {
-    dot.addEventListener("click", () => mostrarSlide(index));
-  });
-
-  let scrollFrame = 0;
-  alecrimCarousel.addEventListener("scroll", () => {
-    cancelAnimationFrame(scrollFrame);
-    scrollFrame = requestAnimationFrame(() => {
-      const center = alecrimCarousel.scrollLeft + alecrimCarousel.clientWidth / 2;
-      const nearest = slides.reduce((best, slide, index) => {
-        const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
-        return Math.abs(slideCenter - center) < Math.abs(slides[best].offsetLeft + slides[best].offsetWidth / 2 - center)
-          ? index
-          : best;
-      }, 0);
-      activeSlide = nearest;
-      dots.forEach((dot, index) => {
-        if (index === activeSlide) {
-          dot.setAttribute("aria-current", "true");
-        } else {
-          dot.removeAttribute("aria-current");
-        }
-      });
-    });
-  });
-
-  if (!semMovimento) {
-    window.setInterval(() => mostrarSlide(activeSlide + 1), 6000);
-  }
-}
-
 const artworkModal = document.getElementById("artwork-modal");
 const artworkModalImage = artworkModal?.querySelector(".artwork-modal-image");
 const artworkModalClose = artworkModal?.querySelector(".artwork-modal-close");
