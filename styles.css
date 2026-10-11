@@ -24,6 +24,8 @@
   --nav-link: rgba(255, 255, 255, 0.75);
   --nav-panel: rgba(10, 10, 10, 0.85);
   --placeholder: #d9d9d9;
+  --layout-gutter: clamp(1.25rem, 3.5vw, 4rem);
+  --nav-end-space: clamp(5rem, 8vw, 8rem);
 
   --font-body: "Sora", system-ui, -apple-system, sans-serif;
   --font-display: "Karla", "Sora", system-ui, sans-serif;
@@ -245,7 +247,7 @@ main {
   position: relative;
   width: 100%;
   margin: 0 auto;
-  padding: 1.35rem clamp(1.25rem, 3.5vw, 4rem);
+  padding: 1.35rem var(--layout-gutter);
   display: flex;
   align-items: center;
   gap: 2.5rem;
@@ -269,7 +271,7 @@ main {
   display: flex;
   justify-content: space-between;
   gap: clamp(1.25rem, 4vw, 4rem);
-  padding-right: clamp(5rem, 8vw, 8rem);
+  padding-right: var(--nav-end-space);
   list-style: none;
 }
 
@@ -397,11 +399,11 @@ main {
   position: relative;
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
   justify-items: center;
   gap: 0;
-  padding: 5rem 2rem 1rem;
+  padding: 5rem var(--layout-gutter) 1rem;
   margin-top: 0;
 }
 
@@ -413,15 +415,15 @@ main {
 }
 
 .hero-text--left {
-  justify-self: end;
+  grid-column: 1;
+  justify-self: start;
   text-align: left;
-  margin-right: -2vw;
 }
 
 .hero-text--right {
-  justify-self: start;
+  grid-column: 4;
+  justify-self: end;
   text-align: right;
-  margin-left: -2vw;
 }
 
 .hero-eyebrow {
@@ -450,8 +452,10 @@ main {
 
 /* ===== Foto do hero (efeito flutuante) ===== */
 .img {
+  grid-column: 2 / 4;
   position: relative;
   z-index: 1;
+  justify-self: center;
   line-height: 0;
   animation: flutuar 3s ease-in-out infinite;
   will-change: transform;
@@ -508,6 +512,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-inline: var(--layout-gutter);
   overflow: hidden;
 }
 
@@ -537,22 +542,23 @@ main {
   height: calc(74vh + 26vh * var(--p, 0));
   border-radius: calc(30px - 30px * var(--p, 0));
   background: #121212;
+  box-shadow: 0 0 0 calc(var(--layout-gutter) * var(--p, 0)) #121212;
   overflow: hidden;
   display: flex;
   align-items: center;
-  padding: clamp(1.5rem, 4vw, 4rem);
+  padding: clamp(1.5rem, 4vw, 4rem) 0 clamp(1.5rem, 4vw, 4rem) 0;
 }
 
 .about-content {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 1200px;
+  max-width: none;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 0.85fr;
+  grid-template-columns: 1.4fr 0.8fr;
   align-items: center;
-  gap: clamp(1.5rem, 5vw, 5rem);
+  gap: clamp(1rem, 2vw, 2rem);
   /* conteudo sempre visivel: so acompanha o crescimento do painel */
   transform: scale(calc(0.93 + 0.07 * var(--p, 0)));
   transform-origin: center;
@@ -568,20 +574,19 @@ main {
 .about-title {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(2.1rem, 4vw, 3.6rem);
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
   line-height: 1.05;
   letter-spacing: -0.055em;
   text-transform: uppercase;
-  max-width: 15ch;
 }
 
 .about-desc {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
-  line-height: 1.45;
+  font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+  line-height: 1.55;
   color: var(--text);
-  max-width: 40ch;
+  max-width: none;
 }
 
 .about-contacts {
@@ -718,6 +723,7 @@ main {
   display: flex;
   flex-wrap: wrap;
   gap: 0 0.8rem;
+  margin-bottom: 2rem;
 }
 
 /* o bloco do hero ignora o mouse; o botao precisa receber o clique */
@@ -730,7 +736,7 @@ main {
 .about-photo {
   justify-self: end;
   width: 100%;
-  max-width: 380px;
+  max-width: 440px;
   aspect-ratio: 3 / 4;
   border-radius: 18px;
   overflow: hidden;
@@ -812,6 +818,7 @@ main {
     width: 100%;
     height: auto;
     border-radius: 0;
+    box-shadow: none;
     /* o respiro fica aqui dentro, entre a borda e o conteudo */
     padding: 2.5rem 1.5rem 3rem;
   }
@@ -1097,7 +1104,7 @@ main {
 }
 
 .design-gallery-heading {
-  padding: clamp(8rem, 16vh, 12rem) clamp(1.25rem, 4vw, 3.5rem) clamp(2rem, 5vw, 4rem);
+  padding: clamp(8rem, 16vh, 12rem) var(--layout-gutter) clamp(2rem, 5vw, 4rem);
   text-align: center;
 }
 
@@ -1117,18 +1124,13 @@ main {
   line-height: 1;
 }
 
-.design-page .navbar.scrolled {
-  background: #f16ba5;
-}
-
 .design-page .design-gallery--page {
   width: 100%;
-  max-width: 1280px;
-  margin-inline: auto;
+  max-width: none;
   display: block;
   columns: 3;
   column-gap: 0.75rem;
-  padding: 0 clamp(1.25rem, 3vw, 2.5rem) 3rem;
+  padding: 0 var(--layout-gutter) 3rem;
 }
 
 .design-gallery--page img {
@@ -1356,7 +1358,7 @@ main {
   .design-page .design-gallery--page {
     columns: 2;
     column-gap: 0.5rem;
-    padding-inline: 0.75rem;
+    padding-inline: var(--layout-gutter);
   }
 
   .design-artwork {
@@ -1599,7 +1601,7 @@ main {
 
 /* ===== Pagina de case (projeto) ===== */
 .case-page {
-  background: #ededed;
+  background: #fff;
 }
 
 /* No topo do case o video e claro: os links precisam ser escuros */
@@ -1630,7 +1632,6 @@ main {
 .case-video {
   position: relative;
   width: 100%;
-  /* ocupa a tela inteira */
   height: 100vh;
   min-height: 520px;
   background: #262626;
@@ -1660,13 +1661,13 @@ main {
 
 /* Corpo claro do case */
 .case-body {
-  background: #ededed;
+  background: #fff;
   color: #131313;
-  padding: clamp(2.5rem, 6vw, 5rem) 1.5rem clamp(3rem, 7vw, 6rem);
+  padding: clamp(2.5rem, 6vw, 5rem) var(--layout-gutter) clamp(3rem, 7vw, 6rem);
 }
 
 .case-inner {
-  max-width: 1000px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -1707,7 +1708,8 @@ main {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
-  max-width: 78ch;
+  width: 100%;
+  max-width: none;
 }
 
 .case-text p {
@@ -1789,10 +1791,9 @@ main {
 .case-fonts {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* os dois blocos centralizados entre si, sem sobra em cima nem embaixo */
-  align-items: center;
+  align-items: start;
   gap: clamp(2rem, 6vw, 5rem);
-  margin-top: 1rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
 }
 
 .case-fonts-side {
@@ -1800,12 +1801,17 @@ main {
   flex-direction: column;
 }
 
+.case-fonts-side > .case-title--sub {
+  margin-top: 0;
+}
+
 .case-fonts-text {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
   margin-top: 1rem;
-  max-width: 46ch;
+  width: 100%;
+  max-width: none;
 }
 
 .case-fonts-text p {
@@ -1820,11 +1826,21 @@ main {
   display: flex;
   flex-direction: column;
   gap: 2.2rem;
-  /* largura do proprio texto, encostada na direita:
-     a borda do bloco cai na mesma linha do ultimo quadrado de cor */
+  grid-column: 2;
   justify-self: end;
+  align-self: start;
   width: max-content;
   max-width: 100%;
+  min-width: 0;
+  padding-top: clamp(5rem, 6vw, 6rem);
+}
+
+.case-specimen {
+  min-width: 0;
+}
+
+.case-specimen p {
+  overflow-wrap: anywhere;
 }
 
 /* Ferramentas usadas no projeto */
@@ -2032,30 +2048,6 @@ main {
   display: block;
 }
 
-/* Volta para os projetos */
-.case-nav {
-  background: #ededed;
-  /* embaixo: +40px que o rodape cobre ao subir */
-  padding: 2.5rem 1.5rem calc(2.5rem + 40px);
-  text-align: center;
-}
-
-.case-back {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 0.95rem;
-  color: #131313;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(19, 19, 19, 0.4);
-  padding-bottom: 2px;
-  transition: color 0.25s ease, border-color 0.25s ease;
-}
-
-.case-back:hover {
-  color: #ff006e;
-  border-color: #ff006e;
-}
-
 @media (max-width: 720px) {
   /* Quadro um pouco mais alto que o video (4:3): o conteudo fica maior,
      cortando so um pouco das laterais. */
@@ -2081,6 +2073,8 @@ main {
   }
 
   .case-specimens {
+    grid-column: 1;
+    justify-self: start;
     padding-top: 0;
   }
 
@@ -2491,16 +2485,6 @@ main {
   text-align: center;
 }
 
-.alecrim-page .case-back {
-  border-color: rgba(45, 48, 35, 0.35);
-  color: var(--alecrim-ink);
-}
-
-.alecrim-page .case-back:hover {
-  border-color: var(--alecrim-brown);
-  color: var(--alecrim-brown);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .alecrim-page .alecrim-marquee-track {
     animation: none;
@@ -2598,28 +2582,21 @@ body.sem-transicao .footer {
   padding: 2.5rem 2rem 1.5rem;
 }
 
+.case-page .footer,
 .design-page .footer {
-  background: #0a0a0a;
-  color: #f5f5f5;
-}
-
-.design-page .footer-cols {
-  border-bottom-color: rgba(255, 255, 255, 0.25);
-}
-
-.design-page .footer-col a,
-.design-page .footer-social a,
-.design-page .footer-bottom a {
-  color: #f5f5f5;
-}
-
-.design-page .footer-social a:hover {
-  color: #ff006e;
+  padding-inline: 0;
 }
 
 .footer-inner {
   max-width: 1100px;
   margin: 0 auto;
+}
+
+.case-page .footer-inner,
+.design-page .footer-inner {
+  width: 100%;
+  max-width: none;
+  padding-inline: var(--layout-gutter);
 }
 
 .footer-cols {
@@ -2709,15 +2686,7 @@ body.sem-transicao .footer {
 /* Telas médias: some a sobreposição e a foto cede espaço ao texto */
 @media (max-width: 1080px) {
   .hero {
-    padding: 6rem 1.5rem 2rem;
-  }
-
-  .hero-text--left {
-    margin-right: 0;
-  }
-
-  .hero-text--right {
-    margin-left: 0;
+    padding: 6rem var(--layout-gutter) 2rem;
   }
 
   .img img {
@@ -2734,6 +2703,16 @@ body.sem-transicao .footer {
     min-height: auto;
     gap: 0;
     padding: 6rem 1.5rem 2.5rem;
+  }
+
+  .hero-text--left,
+  .hero-text--right,
+  .img {
+    grid-column: 1;
+  }
+
+  .img {
+    left: 0;
   }
 
   /* o PNG tem area transparente em volta: as margens negativas
@@ -2849,12 +2828,16 @@ body.sem-transicao .footer {
 }
 
 @media (max-width: 720px) {
+  :root {
+    --layout-gutter: 1.5rem;
+  }
+
   .menu-toggle {
     display: flex;
   }
 
   .nav-container {
-    padding: 1.25rem 1.5rem;
+    padding: 1.25rem var(--layout-gutter);
     justify-content: flex-end;
   }
 
@@ -2922,6 +2905,7 @@ body.sem-transicao .footer {
 
   .btn-group {
     justify-content: center;
+    margin-bottom: 1.5rem;
   }
 
   .about-title,
