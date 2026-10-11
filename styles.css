@@ -1864,12 +1864,35 @@ main {
   gap: 0.75rem;
 }
 
+@media (min-width: 721px) {
+  .case-specimens--dense {
+    gap: 0.1rem;
+  }
+
+  .case-specimens--dense .case-specimen h3 {
+    font-size: 0.8rem;
+    line-height: 1.1;
+    margin-bottom: 0;
+  }
+
+  .case-specimens--dense .case-specimen p {
+    font-size: 0.62rem;
+    line-height: 1.05;
+  }
+}
+
 .case-specimen {
   min-width: 0;
 }
 
 .case-specimen p {
   overflow-wrap: anywhere;
+}
+
+.case-specimen p.specimen-alphabet {
+  white-space: nowrap;
+  font-size: clamp(0.52rem, 0.65vw, 0.75rem);
+  line-height: 1.15;
 }
 
 /* Ferramentas usadas no projeto */
