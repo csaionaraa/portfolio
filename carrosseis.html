@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrosséis — Carla Saionara</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Karla:wght@400;500;600;700;800&family=Press+Start+2P&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="design-page">
+  <div class="site-loader" aria-hidden="true">
+    <span>Carla Saionara</span>
+  </div>
+
+  <header class="navbar" id="navbar">
+    <nav class="nav-container">
+      <ul class="nav-links" id="nav-links">
+        <li><a class="nav-link" href="index.html#inicio" data-pt="Início">
+          <span class="roll"><span class="roll-inner"><span>Home</span><span aria-hidden="true">Home</span></span></span>
+        </a></li>
+        <li><a class="nav-link" href="index.html#projetos" data-pt="Projetos">
+          <span class="roll"><span class="roll-inner"><span>Projects</span><span aria-hidden="true">Projects</span></span></span>
+        </a></li>
+        <li><a class="nav-link" href="index.html#sobre" data-pt="Contato">
+          <span class="roll"><span class="roll-inner"><span>Contact</span><span aria-hidden="true">Contact</span></span></span>
+        </a></li>
+      </ul>
+
+      <button class="lang-toggle" id="lang-toggle" aria-label="Trocar idioma / Change language">
+        <span data-idioma="en">EN</span>
+        <span aria-hidden="true">/</span>
+        <span data-idioma="pt">PT</span>
+      </button>
+
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="design-gallery-heading" aria-labelledby="carousel-gallery-title">
+      <p data-pt="PORTFÓLIO">PORTFOLIO</p>
+      <h1 id="carousel-gallery-title" data-pt="Carrosséis">Carousels</h1>
+    </section>
+
+    <!--
+      Para adicionar um carrossel: copie um bloco <article class="carousel-series"> inteiro,
+      troque o título e aponte as imagens para a nova pasta, na ordem dos slides.
+      As fotos ficam em imagens/carrosseis/<nome-da-pasta>/1.jpg, 2.jpg, 3.jpg...
+    -->
+    <section class="carousel-list" aria-label="Galeria de carrosséis">
+
+      <article class="carousel-series">
+        <header class="carousel-series-header">
+          <h2 data-pt="Educação">Education</h2>
+          <span class="carousel-series-count" data-pt="6 slides">6 slides</span>
+        </header>
+        <div class="carousel-strip">
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 1 do carrossel de Educação" data-full-image="imagens/carrosseis/educacao/1.jpg" data-image-alt="Carrossel de Educação, slide 1">
+            <img src="imagens/carrosseis/educacao/1.jpg" alt="Carrossel de Educação, slide 1" loading="lazy" decoding="async" />
+          </button>
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 2 do carrossel de Educação" data-full-image="imagens/carrosseis/educacao/2.jpg" data-image-alt="Carrossel de Educação, slide 2">
+            <img src="imagens/carrosseis/educacao/2.jpg" alt="Carrossel de Educação, slide 2" loading="lazy" decoding="async" />
+          </button>
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 3 do carrossel de Educação" data-full-image="imagens/carrosseis/educacao/3.jpg" data-image-alt="Carrossel de Educação, slide 3">
+            <img src="imagens/carrosseis/educacao/3.jpg" alt="Carrossel de Educação, slide 3" loading="lazy" decoding="async" />
+          </button>
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 4 do carrossel de Educação" data-full-image="imagens/carrosseis/educacao/4.jpg" data-image-alt="Carrossel de Educação, slide 4">
+            <img src="imagens/carrosseis/educacao/4.jpg" alt="Carrossel de Educação, slide 4" loading="lazy" decoding="async" />
+          </button>
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 5 do carrossel de Educação" data-full-image="imagens/carrosseis/educacao/5.jpg" data-image-alt="Carrossel de Educação, slide 5">
+            <img src="imagens/carrosseis/educacao/5.jpg" alt="Carrossel de Educação, slide 5" loading="lazy" decoding="async" />
+          </button>
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 6 do carrossel de Educação" data-full-image="imagens/carrosseis/educacao/6.jpg" data-image-alt="Carrossel de Educação, slide 6">
+            <img src="imagens/carrosseis/educacao/6.jpg" alt="Carrossel de Educação, slide 6" loading="lazy" decoding="async" />
+          </button>
+        </div>
+      </article>
+
+      <article class="carousel-series">
+        <header class="carousel-series-header">
+          <h2 data-pt="Advocacia">Law</h2>
+          <span class="carousel-series-count" data-pt="5 slides">5 slides</span>
+        </header>
+        <div class="carousel-strip">
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 1 do carrossel de Advocacia" data-full-image="imagens/carrosseis/advocacia/1.jpg" data-image-alt="Carrossel de Advocacia, slide 1">
+            <img src="imagens/carrosseis/advocacia/1.jpg" alt="Carrossel de Advocacia, slide 1" loading="lazy" decoding="async" />
+          </button>
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 2 do carrossel de Advocacia" data-full-image="imagens/carrosseis/advocacia/2.jpg" data-image-alt="Carrossel de Advocacia, slide 2">
+            <img src="imagens/carrosseis/advocacia/2.jpg" alt="Carrossel de Advocacia, slide 2" loading="lazy" decoding="async" />
+          </button>
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 3 do carrossel de Advocacia" data-full-image="imagens/carrosseis/advocacia/3.jpg" data-image-alt="Carrossel de Advocacia, slide 3">
+            <img src="imagens/carrosseis/advocacia/3.jpg" alt="Carrossel de Advocacia, slide 3" loading="lazy" decoding="async" />
+          </button>
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 4 do carrossel de Advocacia" data-full-image="imagens/carrosseis/advocacia/4.jpg" data-image-alt="Carrossel de Advocacia, slide 4">
+            <img src="imagens/carrosseis/advocacia/4.jpg" alt="Carrossel de Advocacia, slide 4" loading="lazy" decoding="async" />
+          </button>
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 5 do carrossel de Advocacia" data-full-image="imagens/carrosseis/advocacia/5.jpg" data-image-alt="Carrossel de Advocacia, slide 5">
+            <img src="imagens/carrosseis/advocacia/5.jpg" alt="Carrossel de Advocacia, slide 5" loading="lazy" decoding="async" />
+          </button>
+        </div>
+      </article>
+
+      <article class="carousel-series">
+        <header class="carousel-series-header">
+          <h2 data-pt="Desenvolvimento Infantil">Child Development</h2>
+          <span class="carousel-series-count" data-pt="5 slides">5 slides</span>
+        </header>
+        <div class="carousel-strip">
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 1 do carrossel de Desenvolvimento Infantil" data-full-image="imagens/carrosseis/desenvolvimento-infantil/1.jpg" data-image-alt="Carrossel de Desenvolvimento Infantil, slide 1">
+            <img src="imagens/carrosseis/desenvolvimento-infantil/1.jpg" alt="Carrossel de Desenvolvimento Infantil, slide 1" loading="lazy" decoding="async" />
+          </button>
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 2 do carrossel de Desenvolvimento Infantil" data-full-image="imagens/carrosseis/desenvolvimento-infantil/2.jpg" data-image-alt="Carrossel de Desenvolvimento Infantil, slide 2">
+            <img src="imagens/carrosseis/desenvolvimento-infantil/2.jpg" alt="Carrossel de Desenvolvimento Infantil, slide 2" loading="lazy" decoding="async" />
+          </button>
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 3 do carrossel de Desenvolvimento Infantil" data-full-image="imagens/carrosseis/desenvolvimento-infantil/3.jpg" data-image-alt="Carrossel de Desenvolvimento Infantil, slide 3">
+            <img src="imagens/carrosseis/desenvolvimento-infantil/3.jpg" alt="Carrossel de Desenvolvimento Infantil, slide 3" loading="lazy" decoding="async" />
+          </button>
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 4 do carrossel de Desenvolvimento Infantil" data-full-image="imagens/carrosseis/desenvolvimento-infantil/4.jpg" data-image-alt="Carrossel de Desenvolvimento Infantil, slide 4">
+            <img src="imagens/carrosseis/desenvolvimento-infantil/4.jpg" alt="Carrossel de Desenvolvimento Infantil, slide 4" loading="lazy" decoding="async" />
+          </button>
+          <button class="design-artwork carousel-slide" type="button" aria-label="Ampliar slide 5 do carrossel de Desenvolvimento Infantil" data-full-image="imagens/carrosseis/desenvolvimento-infantil/5.jpg" data-image-alt="Carrossel de Desenvolvimento Infantil, slide 5">
+            <img src="imagens/carrosseis/desenvolvimento-infantil/5.jpg" alt="Carrossel de Desenvolvimento Infantil, slide 5" loading="lazy" decoding="async" />
+          </button>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <footer id="contato" class="footer">
+    <div class="footer-inner">
+      <div class="footer-cols">
+        <div class="footer-col">
+          <p class="footer-label" data-pt="E-MAIL:">EMAIL:</p>
+          <a href="mailto:csaionaraa@gmail.com">csaionaraa@gmail.com</a>
+        </div>
+
+        <div class="footer-col">
+          <p class="footer-label" data-pt="REDES SOCIAIS:">SOCIAL MEDIA:</p>
+          <div class="footer-social">
+            <a href="https://www.linkedin.com/in/carla-saionara-araujo-47b14a226/" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+              </svg>
+            </a>
+            <a href="https://github.com/csaionaraa" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 .3a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.01 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .3z"/>
+              </svg>
+            </a>
+            <a href="https://www.behance.net/carlasaionaraa" target="_blank" rel="noopener" aria-label="Behance">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M3.5 5h6.1c3 0 4.8 1.3 4.8 3.6 0 1.3-.6 2.2-1.6 2.7 1.5.5 2.5 1.7 2.5 3.5 0 2.7-2.1 4.2-5.2 4.2H3.5V5zm3 2.4v3h2.8c1.3 0 2.1-.5 2.1-1.5s-.8-1.5-2.1-1.5H6.5zm0 5.2v4h3.2c1.5 0 2.4-.7 2.4-2s-.9-2-2.4-2H6.5zM16 7h5v1.5h-5V7zm2.5 2.2c2.6 0 4.3 1.8 4.3 4.6v.7h-6.2c.2 1.3.9 2 2.1 2 .8 0 1.4-.3 1.8-1l2 .9c-.7 1.5-2.1 2.3-3.9 2.3-3 0-4.8-2-4.8-4.8 0-2.7 1.8-4.7 4.7-4.7zm1.9 3.6c-.2-1-.8-1.6-1.9-1.6-1 0-1.6.6-1.9 1.6h3.8z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p><span data-pt="&copy; Copyright 2026. Todos os direitos reservados por">&copy; Copyright 2026. All Rights Reserved by</span> <a href="index.html">Carla Saionara</a></p>
+        <p><span data-pt="Criado por">Created by</span> <a href="index.html">Carla Saionara</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="artwork-modal" id="artwork-modal" aria-label="Imagem ampliada">
+    <button class="artwork-modal-close" type="button" aria-label="Fechar imagem ampliada">&times;</button>
+    <img class="artwork-modal-image" alt="" />
+  </dialog>
+
+  <script src="https://unpkg.com/lenis@1.3.1/dist/lenis.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
