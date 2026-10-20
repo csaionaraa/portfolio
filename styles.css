@@ -1242,6 +1242,83 @@ main {
   outline-offset: 3px;
 }
 
+/* ===== Carrosséis: cada série é uma faixa de slides lado a lado ===== */
+.carousel-list {
+  display: grid;
+  gap: clamp(3rem, 7vw, 5.5rem);
+  padding: 0 var(--layout-gutter) 4rem;
+}
+
+.carousel-series-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.carousel-series-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.carousel-series-count {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* uma coluna por slide: a faixa se ajusta a qualquer quantidade de fotos */
+.carousel-strip {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 0;
+  counter-reset: slide;
+}
+
+.carousel-slide {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  counter-increment: slide;
+}
+
+.carousel-slide img {
+  height: 100%;
+  object-fit: cover;
+}
+
+/* foto ainda não adicionada: mostra o número do slide no lugar */
+.carousel-slide.is-vazio {
+  cursor: default;
+  outline: 1px dashed rgba(255, 255, 255, 0.2);
+  outline-offset: -1px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.carousel-slide.is-vazio img {
+  display: none;
+}
+
+.carousel-slide.is-vazio::after {
+  content: counter(slide, decimal-leading-zero);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vw, 1.5rem);
+}
+
 .service-projects-note {
   padding: 1rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.14);
@@ -1383,6 +1460,23 @@ main {
 
   .design-artwork {
     margin-bottom: 0.5rem;
+  }
+
+  /* no celular a faixa rola para o lado, um slide e meio por vez */
+  .carousel-strip {
+    grid-auto-columns: 66%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .carousel-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-slide {
+    margin-bottom: 0;
+    scroll-snap-align: start;
   }
 
 }

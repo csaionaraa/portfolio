@@ -54,6 +54,7 @@ const artworkModalClose = artworkModal?.querySelector(".artwork-modal-close");
 if (artworkModal && artworkModalImage && artworkModalClose) {
   document.querySelectorAll(".design-artwork").forEach((artwork) => {
     artwork.addEventListener("click", () => {
+      if (artwork.classList.contains("is-vazio")) return;
       artworkModalImage.src = artwork.dataset.fullImage;
       artworkModalImage.alt = artwork.dataset.imageAlt || "";
       artworkModal.showModal();
@@ -72,6 +73,15 @@ if (artworkModal && artworkModalImage && artworkModalClose) {
     if (event.target === artworkModal) artworkModal.close();
   });
 }
+
+// Carrosséis: slide cuja foto ainda não existe vira um espaço numerado
+document.querySelectorAll(".carousel-slide img").forEach((img) => {
+  const marcarVazio = () => img.closest(".carousel-slide").classList.add("is-vazio");
+
+  // a imagem pode já ter falhado antes de o script rodar
+  if (img.complete && img.naturalWidth === 0) marcarVazio();
+  img.addEventListener("error", marcarVazio);
+});
 
 // ===== About: painel que cresce até a tela inteira conforme a rolagem =====
 const aboutTrack = document.querySelector(".about-track");
